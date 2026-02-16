@@ -1,0 +1,127 @@
+@charset 'UTF-8';
+
+/* Graphik-Thin */
+@font-face {
+  font-family: "Graphik-Thin";
+  src: url("../fonts/Graphik/Graphik-Thin.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Thin.otf") format("opentype");
+}
+
+/* Graphik-ThinItalic */
+@font-face {
+  font-family: "Graphik-ThinItalic";
+  src: url("../fonts/Graphik/Graphik-ThinItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-ThinItalic.otf") format("opentype");
+}
+
+/* Graphik-Extralight */
+@font-face {
+  font-family: "Graphik-Extralight";
+  src: url("../fonts/Graphik/Graphik-Extralight.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Extralight.otf") format("opentype");
+}
+
+/* Graphik-ExtralightItalic */
+@font-face {
+  font-family: "Graphik-ExtralightItalic";
+  src: url("../fonts/Graphik/Graphik-ExtralightItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-ExtralightItalic.otf") format("opentype");
+}
+
+/* Graphik-Light */
+@font-face {
+  font-family: "Graphik-Light";
+  src: url("../fonts/Graphik/Graphik-Light.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Light.otf") format("opentype");
+}
+
+/* Graphik-LightItalic */
+@font-face {
+  font-family: "Graphik-LightItalic";
+  src: url("../fonts/Graphik/Graphik-LightItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-LightItalic.otf") format("opentype");
+}
+
+/* Graphik-Regular */
+@font-face {
+  font-family: "Graphik-Regular";
+  src: url("../fonts/Graphik/Graphik-Regular.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Regular.otf") format("opentype");
+}
+
+/* Graphik-RegularItalic */
+@font-face {
+  font-family: "Graphik-RegularItalic";
+  src: url("../fonts/Graphik/Graphik-RegularItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-RegularItalic.otf") format("opentype");
+}
+
+/* Graphik-Medium */
+@font-face {
+  font-family: "Graphik-Medium";
+  src: url("../fonts/Graphik/Graphik-Medium.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Medium.otf") format("opentype");
+}
+
+/* Graphik-MediumItalic */
+@font-face {
+  font-family: "Graphik-MediumItalic";
+  src: url("../fonts/Graphik/Graphik-MediumItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-MediumItalic.otf") format("opentype");
+}
+
+/* Graphik-Semibold */
+@font-face {
+  font-family: "Graphik-Semibold";
+  src: url("../fonts/Graphik/Graphik-Semibold.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Semibold.otf") format("opentype");
+}
+
+/* Graphik-SemiboldItalic */
+@font-face {
+  font-family: "Graphik-SemiboldItalic";
+  src: url("../fonts/Graphik/Graphik-SemiboldItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-SemiboldItalic.otf") format("opentype");
+}
+
+/* Graphik-Bold */
+@font-face {
+  font-family: "Graphik-Bold";
+  src: url("../fonts/Graphik/Graphik-Bold.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Bold.otf") format("opentype");
+}
+
+/* Graphik-BoldItalic */
+@font-face {
+  font-family: "Graphik-BoldItalic";
+  src: url("../fonts/Graphik/Graphik-BoldItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-BoldItalic.otf") format("opentype");
+}
+
+/* Graphik-Black */
+@font-face {
+  font-family: "Graphik-Black";
+  src: url("../fonts/Graphik/Graphik-Black.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Black.otf") format("opentype");
+}
+
+/* Graphik-BlackItalic */
+@font-face {
+  font-family: "Graphik-BlackItalic";
+  src: url("../fonts/Graphik/Graphik-BlackItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-BlackItalic.otf") format("opentype");
+}
+
+/* Graphik-Super */
+@font-face {
+  font-family: "Graphik-Super";
+  src: url("../fonts/Graphik/Graphik-Super.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-Super.otf") format("opentype");
+}
+
+/* Graphik-SuperItalic */
+@font-face {
+  font-family: "Graphik-SuperItalic";
+  src: url("../fonts/Graphik/Graphik-SuperItalic.ttf") format("truetype"),
+       url("../fonts/Graphik/Graphik-SuperItalic.otf") format("opentype");
+}

@@ -1,0 +1,177 @@
+{
+    "searchSchemaId": "asset",
+    "lang": "EN",
+    "output": {
+        "items": {
+            "fields": [
+                "id",
+                "title",
+                "title_multi",
+                "actualVersionNumber",
+                "currentVersion",
+                "validFrom",
+                "validTo",
+                "keywords",
+                "keywords_multi",
+                "affiliateNumber",
+                "owner",
+                "description",
+                "description_multi",
+                "division",
+                "editState",
+                "masterAsset",
+                "lastUpdatedTime",
+                "popularity",
+                "suitableForW2P",
+                "hiRes",
+                "isins",
+                "relationsCount",
+                "downloadApprovalData",
+                "themes",
+                "watchers",
+                "variants",
+                "variantsCount",
+                "alternativeImage",
+                "hideIfNotValid",
+                "versionCount",
+                "platform",
+                "license",
+                "uploadDate",
+                "programVersion",
+                "versions",
+                "channelPublications",
+                "persons",
+                "relations",
+                "language",
+                "countries",
+                "structuredKeywords",
+                "uploadApprovalData",
+                "itemNumber",
+                "vdb",
+                "assetType",
+                "customAttribute_26",
+                "customAttribute_27",
+                "customAttribute_76",
+                "customAttribute_77",
+                "customAttribute_78",
+                "customAttribute_79",
+                "customAttribute_80",
+                "customAttribute_81",
+                "customAttribute_82",
+                "customAttribute_83",
+                "customAttribute_84",
+                "customAttribute_85",
+                "customAttribute_86",
+                "customAttribute_87",
+                "customAttribute_88",
+                "customAttribute_89",
+                "customAttribute_90",
+                "customAttribute_91",
+                "customAttribute_92",
+                "customAttribute_93",
+                "customAttribute_94",
+                "customAttribute_95",
+                "customAttribute_97",
+                "customAttribute_98",
+                "customAttribute_99",
+                "customAttribute_100",
+                "customAttribute_101"
+            ]
+        },
+        "paging": {
+            "@type": "offset",
+            "offset": 0,
+            "limit": 25
+        },
+        "sorting": [
+            {
+                "@type": "relevance",
+                "asc": false
+            },
+            {
+                "@type": "field",
+                "field": "uploadDate",
+                "asc": false
+            }
+        ]
+    },
+    "criteria": {
+        "@type": "and",
+        "subs": [
+            {                
+                "@type": "match",
+                "fields": [
+                    "description_multi",
+                    "itemDescription_multi",
+                    "originalName",
+                    "uploader.name",
+                    "assetType.name",
+                    "customAttribute_76",
+                    "customAttribute_77",
+                    "customAttribute_78",
+                    "customAttribute_79",
+                    "customAttribute_80.value",
+                    "customAttribute_81",
+                    "customAttribute_83",
+                    "customAttribute_84",
+                    "customAttribute_85.value",
+                    "customAttribute_86",
+                    "customAttribute_87",
+                    "customAttribute_88.value",
+                    "customAttribute_89.value",
+                    "customAttribute_90",
+                    "customAttribute_95.value",
+                    "customAttribute_97.value",
+                    "customAttribute_98.value",
+                    "customAttribute_99.value",
+                    "customAttribute_100.value",
+                    "customAttribute_101.value",
+                    "colorSpace.type",
+                    "countries.id",
+                    "countries.name_multi",
+                    "documentDimensions.unit",
+                    "itemNumber",
+                    "keywords_multi",
+                    "language.code",
+                    "language.name_multi",
+                    "persons",
+                    "extension",
+                    "affiliateNumber",
+                    "id",
+                    "licenseHolderName",
+                    "licenseData.license",
+                    "channelPublications.channelId",
+                    "division.name",
+                    "owner.name",
+                    "themes.name_multi",
+                    "themes.pathIds",
+                    "title_multi",
+                    "vdb.name_multi",
+                    "w2pClassification"
+                ],
+                "value": ""
+            },
+            {
+                "@type": "and",
+                "subs": [
+                    {
+                        "@type": false,
+                        "fields": [
+                            "isVariant"
+                        ]
+                    },
+                    {
+                        "@type": "not",
+                        "criteria": {
+                            "@type": "eq",
+                            "fields": [
+                                "vdb.id"
+                            ],
+                            "long_value": 3
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

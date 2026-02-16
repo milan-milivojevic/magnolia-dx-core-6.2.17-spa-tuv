@@ -1,0 +1,21 @@
+label: Description & Link Layout
+$type: comboBoxField
+datasource:
+  $type: optionListDatasource
+  defaultValue: start
+  options:
+    - name: unset  
+      label: Unset
+      value: null
+    - name: row  
+      label: Row
+      value: row
+    - name: column  
+      label: Column
+      value: column
+    - name: rowReverse  
+      label: Row Reverse
+      value: row-reverse
+    - name: columnReverse
+      label: Column Reverse
+      value: column-reverse

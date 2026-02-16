@@ -1,0 +1,80 @@
+label: Font Family
+$type: comboBoxField
+datasource:
+  $type: optionListDatasource
+  options:
+    - name: default
+      value: default
+      label: default
+
+    - name: Graphik-Thin
+      value: Graphik-Thin
+      label: Graphik-Thin
+
+    - name: Graphik-ThinItalic
+      value: Graphik-ThinItalic
+      label: Graphik-ThinItalic
+
+    - name: Graphik-Extralight
+      value: Graphik-Extralight
+      label: Graphik-Extralight
+
+    - name: Graphik-ExtralightItalic
+      value: Graphik-ExtralightItalic
+      label: Graphik-ExtralightItalic
+
+    - name: Graphik-Light
+      value: Graphik-Light
+      label: Graphik-Light
+
+    - name: Graphik-LightItalic
+      value: Graphik-LightItalic
+      label: Graphik-LightItalic
+
+    - name: Graphik-Regular
+      value: Graphik-Regular
+      label: Graphik-Regular
+
+    - name: Graphik-RegularItalic
+      value: Graphik-RegularItalic
+      label: Graphik-RegularItalic
+
+    - name: Graphik-Medium
+      value: Graphik-Medium
+      label: Graphik-Medium
+
+    - name: Graphik-MediumItalic
+      value: Graphik-MediumItalic
+      label: Graphik-MediumItalic
+
+    - name: Graphik-Semibold
+      value: Graphik-Semibold
+      label: Graphik-Semibold
+
+    - name: Graphik-SemiboldItalic
+      value: Graphik-SemiboldItalic
+      label: Graphik-SemiboldItalic
+
+    - name: Graphik-Bold
+      value: Graphik-Bold
+      label: Graphik-Bold
+
+    - name: Graphik-BoldItalic
+      value: Graphik-BoldItalic
+      label: Graphik-BoldItalic
+
+    - name: Graphik-Black
+      value: Graphik-Black
+      label: Graphik-Black
+
+    - name: Graphik-BlackItalic
+      value: Graphik-BlackItalic
+      label: Graphik-BlackItalic
+
+    - name: Graphik-Super
+      value: Graphik-Super
+      label: Graphik-Super
+
+    - name: Graphik-SuperItalic
+      value: Graphik-SuperItalic
+      label: Graphik-SuperItalic
