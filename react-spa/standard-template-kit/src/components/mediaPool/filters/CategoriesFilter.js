@@ -12,9 +12,8 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [tempParents, setTempParents] = useState([]);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
-  /* Dohvatanje Filtera */
   useEffect(() => {
     fetch(`${baseUrl}/rest/mp/v1.2/themes`)
       .then((response) => response.json())
@@ -24,7 +23,6 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
         setInitialParents(transformedParents);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedCategories]);
 
@@ -36,11 +34,11 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
         value: item.id.toString(),
         isChecked: selectedCategories?.includes(item.id.toString())
       };
-  
+
       if (item.children && item.children.length > 0) {
         mappedItem.children = mapItems(item.children);
       }
-  
+
       return mappedItem;
     });
   };
@@ -48,8 +46,6 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
   const mapData = (data) => {
     return mapItems(data);
   };
-  
-  /* Otvaranje Filtera i Dropdowna  */
 
   const extractCheckStates = (items) => {
     return items.map(item => {
@@ -66,7 +62,7 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
       setTempParents(tempCheckStates);
     }
     setIsFilterOpen(!isFilterOpen);
-  };  
+  };
 
   const toggleParentDropdown = (parentId) => {
     setParents(prevState => prevState.map(parent => {
@@ -110,8 +106,6 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
     }));
   };
 
-  /* Hendlovanje promena stanja Checkbox-ova */
-
   const toggleParentCheckbox = (parentId) => {
     setParents(prevState => prevState.map(parent => {
       if (parent.id === parentId) {
@@ -139,7 +133,7 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
 
   const toggleChildCheckbox = (parentId, childId) => {
     setParents(prevState => prevState.map(parent => {
-      if (parent.id === parentId) {            
+      if (parent.id === parentId) {
         parent.children = parent.children.map(child => {
           if (child.id === childId) {
             if (child.children) {
@@ -166,9 +160,9 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
 
   const toggleSubchildCheckbox = (parentId, childId, subchildId) => {
     setParents(prevState => prevState.map(parent => {
-      if (parent.id === parentId) {       
+      if (parent.id === parentId) {
         parent.children = parent.children.map(child => {
-          if (child.id === childId) {            
+          if (child.id === childId) {
             child.children = child.children.map(subchild => {
               if (subchild.id === subchildId) {
                 if (subchild.children) {
@@ -177,12 +171,12 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
                   subchild.children.forEach(grandchild => grandchild.isChecked = !allGrandchildrenChecked);
                 } else {
                   subchild.isChecked = !subchild.isChecked;
-                } 
+                }
               }
               return subchild;
             });
             const allSubchildrenChecked = child.children.every(subchild => subchild.isChecked);
-            child.isChecked = allSubchildrenChecked;      
+            child.isChecked = allSubchildrenChecked;
           }
           return child;
         });
@@ -195,9 +189,9 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
 
   const toggleGrandchildCheckbox = (parentId, childId, subchildId, grandchildID) => {
     setParents(prevState => prevState.map(parent => {
-      if (parent.id === parentId) {       
+      if (parent.id === parentId) {
         parent.children = parent.children.map(child => {
-          if (child.id === childId) {            
+          if (child.id === childId) {
             child.children = child.children.map(subchild => {
               if (subchild.id === subchildId) {
                 subchild.children = subchild.children.map(grandchild => {
@@ -207,12 +201,12 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
                   return grandchild;
               });
                 const allGrandchildrenChecked = subchild.children.every(grandchild => grandchild.isChecked);
-                subchild.isChecked = allGrandchildrenChecked;    
+                subchild.isChecked = allGrandchildrenChecked;
               }
               return subchild;
             });
             const allSubchildrenChecked = child.children.every(subchild => subchild.isChecked);
-            child.isChecked = allSubchildrenChecked;      
+            child.isChecked = allSubchildrenChecked;
           }
           return child;
         });
@@ -223,8 +217,6 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
     }));
   };
 
-  /* Pakovanje selektovanih vrednosti u niz i zatvaranje filtera */
-  
   const applySelection = () => {
     const values = [];
 
@@ -248,7 +240,7 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
               values.push(grandchild.value);
             }
           })
-        })  
+        })
       })
     });
 
@@ -256,10 +248,8 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
     setIsFilterOpen(false);
   };
 
-  /* Restartovanje stanja svih Checkboxova */
-
   const clearAll = () => {
-    setParents(initialParents.map(parent => {     
+    setParents(initialParents.map(parent => {
       parent.isChecked = false;
       parent.children?.forEach(child => {
         child.isChecked = false;
@@ -274,8 +264,6 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
     }));
   };
 
-  /* Zatvaranje Filtera */
-
   const resetCheckStates = (items, tempStates) => {
     return items.map((item, index) => {
       return {
@@ -285,14 +273,12 @@ export default function CategoriesFilter({onUpdateSelectedCategories, selectedCa
       };
     });
   };
-  
+
   const cancel = () => {
     const resetParents = resetCheckStates(parents, tempParents);
     setParents(resetParents);
     setIsFilterOpen(false);
   };
-  
-
 
   return (
     <div className="searchFilter categories">

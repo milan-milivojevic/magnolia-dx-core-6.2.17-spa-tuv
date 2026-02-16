@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
-import { querySearch, elasticSearchService } from "../../api/searchService";
-import Card from "../mediaPool/helpers/Card";
+import { elasticSearchService } from "../../api/searchService";import Card from "../mediaPool/helpers/Card";
 import CategoriesFilter from "../mediaPool/filters/CategoriesFilter";
 import FileInfoFilter from "../mediaPool/filters/FileInfoFilter";
 import TagsFilter from "../mediaPool/filters/TagsFilter";
-import VdbFilter from "../mediaPool/filters/VdbFilter";
 import { getAPIBase } from "../../helpers/AppHelpers";
 import { MdOutlineLink } from "react-icons/md";
 import CryptoJS from 'crypto-js';
@@ -38,9 +35,9 @@ function MpSearch ({
 }) {
 
   const elementRef = useRef(null);
-  const baseURL = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseURL = process.env.REACT_APP_MGNL_HOST_NEW;
   const apiBase = getAPIBase();
-  
+
   const initialSortOrder = sortOrder ? sortOrder : "uploadDate,false";
   const splitedSortOrder = initialSortOrder.split(",");
   const initialSortingType = splitedSortOrder[0];
@@ -52,7 +49,7 @@ function MpSearch ({
   const [sortingType, setSortingType] = useState(initialSortingType);
   const [isAsc, setIsAsc] = useState(initialIsAsc);
   const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);  
+  const [hasMore, setHasMore] = useState(true);
   const [matches, setMatches] = useState(0);
   const [view, setView] = useState(defaultView || "grid");
   const [showAlert, setShowAlert] = useState(false);
@@ -62,15 +59,12 @@ function MpSearch ({
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSuffixes, setSelectedSuffixes] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedVdbs, setSelectedVdbs] = useState([]);  
+  const [selectedVdbs, setSelectedVdbs] = useState([]);
 
   useEffect(() => {
-    
+
     let searchParams = new URLSearchParams(window.location.search);
     const encryptedData = searchParams.get('data');
-    
-    console.log("encryptedData");
-    console.log(encryptedData);
 
     let decryptedData = undefined;
     if (encryptedData) {
@@ -96,17 +90,15 @@ function MpSearch ({
 
     const categoriesString = searchParams.get('selectedCategories') || null;
     if (categoriesString) {
-      console.log("categoriesString");
-      console.log(categoriesString);
       categoriesArray = categoriesString.split(',');
       setSelectedCategories(categoriesArray);
     }
-    
+
     const suffixesString = searchParams.get('selectedSuffixes') || null;
     if (suffixesString) {
       suffixesArray = suffixesString.split(',');
       setSelectedSuffixes(suffixesArray);
-    } 
+    }
     const tagsString = searchParams.get('selectedTags') || null;
     if (tagsString) {
       tagsArray = tagsString.split(',');
@@ -118,9 +110,9 @@ function MpSearch ({
       setSelectedVdbs(vdbsArray);
     }
 
-    elasticSearch(urlSortingType, urlIsAsc, urlOffset, urlLimit, urlQuery, categoriesArray, suffixesArray, tagsArray, vdbsArray).then((data) => {      
+    elasticSearch(urlSortingType, urlIsAsc, urlOffset, urlLimit, urlQuery, categoriesArray, suffixesArray, tagsArray, vdbsArray).then((data) => {
       setProducts([]);
-      setProducts(data);      
+      setProducts(data);
     });
   }, []);
 
@@ -129,10 +121,10 @@ function MpSearch ({
       setQuery(globalQuery);
       setOffset(0);
       const currentOffset = 0;
-      elasticSearch(sortingType, isAsc, currentOffset, limit, globalQuery, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs).then((data) => {      
+      elasticSearch(sortingType, isAsc, currentOffset, limit, globalQuery, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs).then((data) => {
         setProducts([]);
-        setProducts(data);      
-      });    
+        setProducts(data);
+      });
     } else return;
   }, [globalQuery]);
 
@@ -146,13 +138,12 @@ function MpSearch ({
 
     setOffset(0);
     const currentOffset = 0;
-    elasticSearch(sortingType, isAsc, currentOffset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs).then((data) => {      
+    elasticSearch(sortingType, isAsc, currentOffset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs).then((data) => {
       setProducts([]);
-      setProducts(data);      
+      setProducts(data);
     });
   }, [selectedCategories, selectedSuffixes, selectedTags, selectedVdbs]);
 
-  // Function to update selectedCategories state
   const updateSelectedCategories = (selectedValues) => {
     setSelectedCategories(selectedValues);
   };
@@ -170,18 +161,18 @@ function MpSearch ({
   };
 
   const elasticSearch = async (sortingType, isAsc, offset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs) => {
-  
+
     const data = await elasticSearchService(sortingType, isAsc, offset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs);
 
     setProducts(data.items);
     setMatches(data.totalHits);
 
     const hasMoreAssets = offset < data.totalHits - 25 ? true : false;
-    setHasMore(hasMoreAssets); 
+    setHasMore(hasMoreAssets);
 
     return data.items;
-  };  
-  
+  };
+
   const changeSorting = (e) => {
 
     setSort(e.target.value);
@@ -194,11 +185,10 @@ function MpSearch ({
     setIsAsc(isAscRaw);
     setOffset(0);
     const currentOffset = 0;
-    
 
-    elasticSearch(sortingTypeRaw, isAscRaw, currentOffset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs).then((data) => {      
+    elasticSearch(sortingTypeRaw, isAscRaw, currentOffset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs).then((data) => {
       setProducts([]);
-      setProducts(data);      
+      setProducts(data);
     });
   };
 
@@ -210,11 +200,10 @@ function MpSearch ({
     setMatches(data.totalHits);
 
     const hasMoreAssets = offset < data.totalHits - 25 ? true : false;
-    setHasMore(hasMoreAssets); 
+    setHasMore(hasMoreAssets);
 
-    return data.items;    
-  };    
-
+    return data.items;
+  };
 
   const loadMoreAssets = () => {
     const currentOffset = offset + 25;
@@ -236,7 +225,7 @@ function MpSearch ({
   };
   const toggleListView = () => {
     setView("list");
-  };  
+  };
 
   const encryptionKey = "XkhZG4fW2t2W";
 
@@ -260,7 +249,6 @@ function MpSearch ({
 
   const encryptedParams = encryptData(params);
   const linkPath = `${baseURL}${apiBase}/Home/Search-Pages/MP-Search?data=${encodeURIComponent(encryptedParams)}`;
-  
 
     const copyLinkToSearchResult = () => {
     navigator.clipboard.writeText(linkPath)
@@ -278,10 +266,10 @@ function MpSearch ({
         <div className="searchFilters">
           <CategoriesFilter onUpdateSelectedCategories={updateSelectedCategories} selectedCategories={selectedCategories}/>
           <FileInfoFilter onUpdateSelectedSuffixes={updateSelectedSuffixes} selectedSuffixes={selectedSuffixes}/>
-          {/* <VdbFilter onUpdateSelectedVdbs={updateSelectedVdbs} selectedVdbs={selectedVdbs}/> */}
+          {}
           <TagsFilter onUpdateSelectedTags={updateSelectedTags} selectedTags={selectedTags}/>
         </div>
-      </div>      
+      </div>
       <div className="searchActions">
         <div className="searchResult">
           <div className="matches">{matches} matches</div>
@@ -319,17 +307,17 @@ function MpSearch ({
             </button>
           </div>
         </div>
-      </div>      
+      </div>
       {products && products.length > 0 ? (
         <>
           <div className={`mpSearchContainer ${view}`} style={{ gridTemplateColumns: `repeat(${perRow ? perRow : 5}, 1fr)` }}>
-            {products.map(c => 
+            {products.map(c =>
               <Card
                 fields={c.fields}
                 key={c.fields.id.value}
                 buttonProps={buttonProps}
               />
-            )}            
+            )}
           </div>
           {hasMore && (
             <div className="loadMoreItems" style={{ width: "100%" }} ref={elementRef}>
@@ -342,7 +330,7 @@ function MpSearch ({
       ) : (
         <div className='mpSearchContainer'>No Results</div>
       )}
-      
+
     </div>
   );
 }

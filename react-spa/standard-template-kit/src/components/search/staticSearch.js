@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { getAPIBase } from "../../helpers/AppHelpers";
-import { IoSearchOutline } from 'react-icons/io5';
 import '../../css.css';
 import { ReactComponent as ArrowsIcon } from '../../images/home/ArrowsIcon.svg';
 
@@ -12,27 +11,25 @@ function StaticSearch ({globalQuery}) {
   const [descriptionsArr, setDescriptionsArr] = useState([]);
   const [headlinesArr, setHeadlinesArr] = useState([]);
   const [titlesArr, setTitlesArr] = useState([]);
-  const [query, setQuery] = useState("");  
+  const [query, setQuery] = useState("");
   const [tempQuery, setTempQuery] = useState("");
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    console.log("globalQuery: ", globalQuery);
-    
+
     if (!globalQuery || globalQuery.length < 2) {
       setQuery("");
       setTempQuery("");
       setDescriptionsArr([]);
       setHeadlinesArr([]);
       setTitlesArr([]);
-      return; 
+      return;
     }
-    
+
     setQuery(globalQuery);
     setTempQuery(globalQuery);
     fetchData(globalQuery);
   }, [globalQuery]);
-  
 
   const fetchData = (searchQuery) => {
 
@@ -40,15 +37,13 @@ function StaticSearch ({globalQuery}) {
     setHeadlinesArr([]);
     setTitlesArr([]);
 
-    // const lowercasedQuery = encodeURIComponent(searchQuery.toLowerCase());
-    
     fetch(`${apiBase}${restPath}?description%5Blike%5D=%25${searchQuery}%25`)
       .then(response => response.json())
       .then(data => {
         setDescriptionsArr(data.results || []);
       })
       .catch(() => setDescriptionsArr([]));
-    
+
     fetch(`${apiBase}${restPath}?headline%5Blike%5D=%25${searchQuery}%25`)
       .then(response => response.json())
       .then(data => {
@@ -61,27 +56,27 @@ function StaticSearch ({globalQuery}) {
       .then(data => {
         setTitlesArr(data.results || []);
       })
-      .catch(() => setTitlesArr([])); 
+      .catch(() => setTitlesArr([]));
   };
-  
+
   const fetchArr = [...descriptionsArr, ...headlinesArr, ...titlesArr];
 
   const dataArr = fetchArr.filter((item, index, array) => {
     return index === array.findIndex((current) => {
       return current["@id"] === item["@id"];
     });
-  });    
+  });
 
   function highlightText(htmlString, searchTerm) {
     if (!htmlString || !searchTerm) {
       return htmlString;
     }
-  
+
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
-    
+
     function highlightTextNode(node) {
-      if (node.nodeType === 3) { // TEXT_NODE
+      if (node.nodeType === 3) {
         const matches = [...node.textContent.matchAll(new RegExp(`(${searchTerm})`, 'gi'))];
         if (matches.length > 0) {
           const spanWrapper = document.createElement('span');
@@ -100,22 +95,21 @@ function StaticSearch ({globalQuery}) {
         node.childNodes.forEach(highlightTextNode);
       }
     }
-  
+
     doc.body.childNodes.forEach(highlightTextNode);
-  
+
     return doc.body.innerHTML;
   }
-  
 
   const orderedData = dataArr.map(orderData);
 
   function orderData(data) {
     const mainSectionIndex = data["@path"].indexOf("/mainSection");
     const bannerSectionIndex = data["@path"].indexOf("/bannerSection");
-    
+
     if (mainSectionIndex !== -1) {
         const shortenedPath = data["@path"].substring(0, mainSectionIndex);
-        const pathParts = shortenedPath.split("/"); 
+        const pathParts = shortenedPath.split("/");
         const lastPage = pathParts[pathParts.length - 1];
         var subPage = null;
         if (data.navigationId) {
@@ -133,7 +127,7 @@ function StaticSearch ({globalQuery}) {
         return orderedData;
     } else if (bannerSectionIndex !== -1) {
         const shortenedPath = data["@path"].substring(0, bannerSectionIndex);
-        const pathParts = shortenedPath.split("/"); 
+        const pathParts = shortenedPath.split("/");
         const lastPage = pathParts[pathParts.length - 1];
         const orderedData = {
             "id": data["@id"],
@@ -144,7 +138,7 @@ function StaticSearch ({globalQuery}) {
         };
         return orderedData;
     } else {
-      const pathParts = data["@path"].split("/"); 
+      const pathParts = data["@path"].split("/");
       const lastPage = pathParts[pathParts.length - 1];
       var path = data["@path"];
       if (data.componentId) {
@@ -163,7 +157,6 @@ function StaticSearch ({globalQuery}) {
   }
 
   const filteredData = orderedData.filter(url => !url.path.includes("/Config-Pages/") && !url.path.includes("/Components-Library/"));
-
 
   const resultArr = [];
 
@@ -206,19 +199,19 @@ function StaticSearch ({globalQuery}) {
       {(resultArr && resultArr.length>0) && resultArr.map((item) => (
         <ul className='list' key={item.id}>
           <li className='page'>
-            <a href={`${apiBase}${item.path}`}>{item.page}<ArrowsIcon/></a>              
-          </li> 
+            <a href={`${apiBase}${item.path}`}>{item.page}<ArrowsIcon/></a>
+          </li>
           {Array.from({ length: item.count }, (_, i) => (
             <React.Fragment key={i}>
               <li className='title'>
                 <h4 dangerouslySetInnerHTML={{ __html: item[`title${i + 1}`] || item[`headline${i + 1}`] || null }}></h4>
-              </li> 
+              </li>
               <li className='description' dangerouslySetInnerHTML={{ __html:item[`description${i+1}`] || null }}>
               </li>
             </React.Fragment>
-          ))}               
+          ))}
         </ul>
-      ))}        
+      ))}
     </div>
   );
 }

@@ -2,25 +2,22 @@ import React, { useRef } from 'react';
 import { AiOutlineClose } from "react-icons/ai";
 import Modal from 'react-modal';
 
-
 const DocumentDetailsModal = ({ documentId, isOpen, onClose }) => {
 
   const iframeRef = useRef(null);
 
   const handleIframeLoad = () => {
     if (iframeRef.current) {
-      // Access the iframe's document
+
       const iframeDocument = iframeRef.current.contentDocument;
 
-      // Create a new style element
       const styleElement = iframeDocument.createElement('style');
 
-      // Define your CSS styles here
       const cssStyles = `
         div#popupHeader {
           display: none;
         }
-        
+
         div#popupFooter {
           display: none;
         }
@@ -30,15 +27,11 @@ const DocumentDetailsModal = ({ documentId, isOpen, onClose }) => {
         }
       `;
 
-      // Set the style element's content to your CSS styles
       styleElement.innerHTML = cssStyles;
 
-      // Append the style element to the iframe's document head
       iframeDocument.head.appendChild(styleElement);
     }
   };
-
-  console.log("Details Modal")
 
   return (
     <Modal
@@ -46,13 +39,13 @@ const DocumentDetailsModal = ({ documentId, isOpen, onClose }) => {
       onRequestClose={onClose}
       contentLabel="Details Modal"
       className="detailsReactModal w2p"
-    > 
+    >
       <div className='detailsModalWrapper w2p'>
         <div class="closeButtonWrapper w2p">
           <h2 className='titleId'>Document Details</h2>
-          <button className="closeButton" onClick={onClose}><AiOutlineClose/></button>          
+          <button className="closeButton" onClick={onClose}><AiOutlineClose/></button>
         </div>
-        <div className='detailsModal w2p'>          
+        <div className='detailsModal w2p'>
           <iframe className="detailsIframe"
                   ref={iframeRef}
                   title={"Document Details"}
@@ -60,7 +53,7 @@ const DocumentDetailsModal = ({ documentId, isOpen, onClose }) => {
                   onLoad={handleIframeLoad}
           ></iframe>
         </div>
-      </div>      
+      </div>
     </Modal>
   );
 };

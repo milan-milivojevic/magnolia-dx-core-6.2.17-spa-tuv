@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { EditableArea } from "@magnolia/react-editor";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-import { FaPlus, FaMinus } from "react-icons/fa";
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -9,7 +8,7 @@ const Wrapper = styled.div`
     background-color: ${(props) => props.hovBgColor && props.hovBgColor + "!important"};
     color: ${(props) => props.hoverTitleColor && props.hoverTitleColor + "!important"};
   }
-  .title:hover svg { 
+  .title:hover svg {
     color: ${(props) => props.hoverChevronColor && props.hoverChevronColor + "!important"};
   }
 `
@@ -20,11 +19,7 @@ function AccordionItem ({
   accordionListProps
 }) {
 
-  /* Properties from AccordionList or AccordionConfigList component */
-
   const listProps = [...accordionListProps];
-
-  /* Open/Close Accordion */
 
   const [open, setOpen] = useState(false);
 
@@ -37,10 +32,10 @@ function AccordionItem ({
   const defBgColor = listProps[0].accordionDefaultBackColor || null;
   const hovBgColor = listProps[0].accordionHoverBackColor || defBgColor;
 
-  const defTitleColor = listProps[0].titleColor || null; 
+  const defTitleColor = listProps[0].titleColor || null;
   const hoverTitleColor = listProps[0].titleHoverColor || defTitleColor;
 
-  const defChevronColor = listProps[0].chevronColor || null;    
+  const defChevronColor = listProps[0].chevronColor || null;
   const hoverChevronColor = listProps[0].chevronHoverColor || defChevronColor;
 
   const accordionItemWrapperStyles = {
@@ -57,7 +52,7 @@ function AccordionItem ({
     paddingTop: listProps[0].accordionInnerPaddingTop || null,
     paddingRight: listProps[0].accordionInnerPaddingRight || null,
     paddingBottom: listProps[0].accordionInnerPaddingBottom || null,
-    paddingLeft: listProps[0].accordionInnerPaddingLeft || null,  
+    paddingLeft: listProps[0].accordionInnerPaddingLeft || null,
     fontSize: listProps[0].titleFontSize || null,
     lineHeight: listProps[0].titleLineHeight || null,
     color: defTitleColor,
@@ -67,7 +62,7 @@ function AccordionItem ({
   const chevronStyles = {
     fontSize: listProps[0].chevronFontSize || null,
     color: defChevronColor
-  }  
+  }
 
   return (
     <Wrapper className="accordionItemWrapper" style={accordionItemWrapperStyles}
@@ -78,7 +73,7 @@ function AccordionItem ({
       <div className="accordion">
         <div className="item">
           <HeadlineLevel className={open ? 'title show' : 'title'} onClick={() => toggle()} style={titleStyles}>
-            {title} 
+            {title}
             {open ?
               <BsChevronUp style={chevronStyles}/> :
               <BsChevronDown style={chevronStyles}/>

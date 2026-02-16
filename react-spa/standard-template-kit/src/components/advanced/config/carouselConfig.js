@@ -20,9 +20,9 @@ function CarouselConfig ({
   arrowColor,
   arrowFontSize,
   arrowIndent,
-  indicatorType,  
+  indicatorType,
   indicatorFontSize,
-  indicatorIndent,  
+  indicatorIndent,
   indicatorColor,
   indicatorActiveColor,
   indicatorGap,
@@ -33,9 +33,7 @@ function CarouselConfig ({
   styleName
 }) {
 
-  const id = useId(); 
-  // const [isAutoSliding, setIsAutoSliding] = useState(true);
-
+  const id = useId();
 
   const myRef = useRef(null);
   const handleClick = () => {
@@ -49,7 +47,7 @@ function CarouselConfig ({
   }
   const activeImages = images.filter((image) => {
     return image !== undefined;
-  }) 
+  })
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeIndicatorIndex, setActiveIndicatorIndex] = useState(currentIndex);
@@ -73,23 +71,12 @@ function CarouselConfig ({
     setActiveIndicatorIndex(slideIndex);
   };
 
-  // Function to start auto-sliding
-  // const startAutoSlide = () => {
-  //   setIsAutoSliding(true);
-  // };
-
-  // Function to stop auto-sliding
-  // const stopAutoSlide = () => {
-  //   setIsAutoSliding(false);
-  // };
-
-  // Auto-slide effect
   useEffect(() => {
     let interval;
     if (carouselAutoplay === true || carouselAutoplay === "true") {
       interval = setInterval(() => {
         goToNext();
-      }, 3000); // 3000ms = 3 seconds
+      }, 3000);
     }
 
     return () => {
@@ -99,11 +86,10 @@ function CarouselConfig ({
     };
   }, [carouselAutoplay, goToNext]);
 
-
   const imageBase = process.env.REACT_APP_MGNL_HOST_NEW;
   const image = activeImages[currentIndex];
   const mediaType = image?.metadata?.format?.includes('image');
-  const url = image['@link'];  
+  const url = image['@link'];
 
   const carouselStyles = {
     position: "relative",
@@ -120,19 +106,19 @@ function CarouselConfig ({
     left: arrowIndent || null
   }
 
-  const rightArrowStyles = { 
+  const rightArrowStyles = {
     color: arrowColor || null,
     fontSize: arrowFontSize || null,
     right: arrowIndent || null
   }
-  
+
   const carouselImageStyles = {
     borderColor: carouselBorderColor || null,
     borderWidth: carouselBorderWidth || null,
     borderStyle: carouselBorderStyle || null,
     borderRadius: carouselBorderRadius || null,
     maxHeight: carouselHeight || null
-  };  
+  };
 
   const indicatorStyles = {
     fontSize: indicatorFontSize || null,
@@ -165,11 +151,10 @@ function CarouselConfig ({
     ...iconStyles,
     backgroundColor: indicatorActiveColor || null,
   }
-  
+
   return (
     <div className='carouselWrapper configComponents'
-      // onMouseEnter={stopAutoSlide}  // Pause on hover
-      // onMouseLeave={startAutoSlide} // Resume on mouse leave
+
     >
       <div className="copyStyleName">
         <h4>Style Name: <span className="copyText" ref={myRef}>{styleName || null}</span></h4>
@@ -185,16 +170,16 @@ function CarouselConfig ({
                 {arrowType === "arrow" ? <BsArrowLeftShort /> : <BsChevronLeft/>}
               </div>
               <div onClick={goToNext} className="rightArrowStyles" style={rightArrowStyles}>
-                {arrowType === "arrow" ? <BsArrowRightShort /> : <BsChevronRight/>}  
+                {arrowType === "arrow" ? <BsArrowRightShort /> : <BsChevronRight/>}
               </div>
             </div>
           : null}
-          {mediaType && 
+          {mediaType &&
             <img className="carouselImage" src={url} alt="" style={carouselImageStyles}/>
           }
-          {!mediaType && 
-            <video 
-              src={url} 
+          {!mediaType &&
+            <video
+              src={url}
               style={carouselImageStyles}
               preload="auto"
               autoPlay="autoplay"
@@ -213,7 +198,7 @@ function CarouselConfig ({
                   style={activeIndicatorIndex !== imageIndex ? indicatorStyles : activeIndicatorStyles}
                   key={imageIndex}
                   onClick={() => goToSlide(imageIndex)}
-                > 
+                >
                   {indicatorType === "squares" ? <FaSquareFull style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/> : indicatorType === "lines" ? <span className="lineIndicator"></span> : <FaCircle style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/>}
                 </div>
               ))}

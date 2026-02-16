@@ -9,7 +9,7 @@ export default function TemplateCategoriesFilter({ onUpdateSelectedTemplateCateg
   const [parents, setParents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
   useEffect(() => {
     fetch(`${baseUrl}/wp/rest/search-filters/templates`)
@@ -22,12 +22,10 @@ export default function TemplateCategoriesFilter({ onUpdateSelectedTemplateCateg
         }));
         setParents(transformedParents);
 
-        // After setting the parents, also set the correct selected option based on prop
         const correspondingSelected = transformedParents.find(parent => parent.value === selectedTemplateCategory);
         setSelectedOption(correspondingSelected || null);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedTemplateCategory]);
 
@@ -57,13 +55,13 @@ export default function TemplateCategoriesFilter({ onUpdateSelectedTemplateCateg
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
-  
+
     if (selectedValue === "none") {
       setSelectedOption(null);
       onUpdateSelectedTemplateCategory(null);
       return;
     }
-  
+
     const findSelectedItem = (items, value) => {
       for (const item of items) {
         if (item.value === value) {
@@ -78,11 +76,11 @@ export default function TemplateCategoriesFilter({ onUpdateSelectedTemplateCateg
       }
       return null;
     };
-  
+
     const templateCategoryObject = parents.find(item => item.value === selectedValue);
     const flattenedItems = mapData(JSON.parse(templateCategoryObject.options));
     const selectedItem = findSelectedItem(flattenedItems, selectedValue);
-  
+
     setSelectedOption(selectedItem);
     onUpdateSelectedTemplateCategory(selectedValue);
   };
@@ -100,12 +98,12 @@ export default function TemplateCategoriesFilter({ onUpdateSelectedTemplateCateg
       </React.Fragment>
     ));
   };
-  
+
   const handleToggle = (item) => {
     const updatedParents = toggleItem(parents, item);
     setParents(updatedParents);
   };
-  
+
   const toggleItem = (items, targetItem) => {
     return items.map(item => {
       if (item.value === targetItem.value) {
@@ -116,7 +114,6 @@ export default function TemplateCategoriesFilter({ onUpdateSelectedTemplateCateg
       return item;
     });
   };
-  
 
   return (
     <div className="searchFilter templateCategory">

@@ -13,12 +13,12 @@ const Wrapper = styled.div`
 `;
 
 function Text ({
-    headline,   
+    headline,
     navigationId,
     headlineLevel,
     headlineFontFamily,
     headlinePosition,
-    headlineTextTransform,    
+    headlineTextTransform,
     addArrows,
     arrowsHeight,
     headlineFontSize,
@@ -62,7 +62,7 @@ function Text ({
 
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;    
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
 
   const [configProps, setConfigProps] = useState();
 
@@ -75,7 +75,7 @@ function Text ({
         result = data[0];
       } else if (noStyles !== (false || "false")) {
         result = null;
-      } 
+      }
       setConfigProps(result);
     });
   }, [styleName, noStyles, apiBase, restPath, nodeName]);
@@ -89,7 +89,7 @@ function Text ({
     paddingTop: wrapperPaddingTop || configProps?.wrapperPaddingTop || null,
     paddingRight: wrapperPaddingRight || configProps?.wrapperPaddingRight || null,
     paddingBottom: wrapperPaddingBottom || configProps?.wrapperPaddingBottom || null,
-    paddingLeft: wrapperPaddingLeft || configProps?.wrapperPaddingLeft || null,    
+    paddingLeft: wrapperPaddingLeft || configProps?.wrapperPaddingLeft || null,
     backgroundColor: defBgColor,
     borderColor: wrapperBorderColor || configProps?.wrapperBorderColor || null,
     borderWidth: wrapperBorderWidth || configProps?.wrapperBorderWidth || null,
@@ -125,7 +125,7 @@ function Text ({
     borderWidth: descriptionBorderWidth || configProps?.descriptionBorderWidth || null,
     borderStyle: descriptionBorderStyle || configProps?.descriptionBorderStyle || null,
     borderRadius: descriptionBorderRadius || configProps?.descriptionBorderRadius || null,
-    textAlign: descriptionAlign || configProps?.descriptionAlign || null             
+    textAlign: descriptionAlign || configProps?.descriptionAlign || null
   }
 
   const addArrowsVar = addArrows || configProps?.addArrows || "false";
@@ -135,7 +135,7 @@ function Text ({
     <Wrapper className='textWrapper'
       hovBgColor={hovBgColor}
       descColor={descriptionColor || configProps?.descriptionColor || null}
-    >  
+    >
       <div className='textComponent' id={navigationId && navigationId} style={textComponentStyles}>
         {headline &&
           <HeadlineLevel className="headline" style={headlineStyles}>
@@ -143,9 +143,9 @@ function Text ({
               {(addArrowsVar !== "false" || false) && <ArrowsIcon/>}
             </span>{headline || null}
           </HeadlineLevel>
-        }     
+        }
         {description &&
-          <div className={`description ${descriptionStyle || configProps?.descriptionStyle}`} 
+          <div className={`description ${descriptionStyle || configProps?.descriptionStyle}`}
                dangerouslySetInnerHTML={{ __html:description || null }}
                style={descriptionStyles}
           ></div>

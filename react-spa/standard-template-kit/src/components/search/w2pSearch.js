@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
 import { BsFillGrid3X3GapFill } from "react-icons/bs";
 import { FaThList } from "react-icons/fa";
 import { templatesSearchService } from '../../api/w2pSearchService';
@@ -24,26 +23,23 @@ const Alert = styled.div`
     padding: 20px;
 `
 
-function W2PSearch ({  
+function W2PSearch ({
   globalQuery,
   sortOrderTemplates,
   perPage,
-  perRow,  
-  defaultView, 
+  perRow,
+  defaultView,
 
   detailsButton,
   favouritesButton,
-  createDocumentButton,  
+  createDocumentButton,
   copyLinkButton,
 }) {
-  
-  // const searchParams = new URLSearchParams(window.location.search);
-  // const urlQuery = searchParams.get('q');
 
   const elementRef = useRef(null);
-  const baseURL = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseURL = process.env.REACT_APP_MGNL_HOST_NEW;
   const apiBase = getAPIBase();
-  
+
   const initialSortOrder = sortOrderTemplates ? sortOrderTemplates : "creationDate,desc";
   const splitedSortOrder = initialSortOrder.split(',');
   const initialSortType = splitedSortOrder[0];
@@ -55,21 +51,21 @@ function W2PSearch ({
   const [sortType, setSortType] = useState(initialSortType);
   const [sortDirection, setSortDirection] = useState(initialSortDirection);
   const [offset, setOffset] = useState(0);
-  const [hasMore, setHasMore] = useState(true);  
+  const [hasMore, setHasMore] = useState(true);
   const [matches, setMatches] = useState(0);
   const [view, setView] = useState(defaultView || "grid");
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = ("");
   const [size, setSize] = useState(perPage || 25);
-  
+
   const [selectedVdb, setSelectedVdb] = useState();
   const [selectedColor, setSelectedColor] = useState();
   const [selectedFormat, setSelectedFormat] = useState();
   const [selectedOutput, setSelectedOutput] = useState();
-  const [selectedTemlateStatus, setSelectedTemlateStatus] = useState();  
+  const [selectedTemlateStatus, setSelectedTemlateStatus] = useState();
 
   useEffect(() => {
-    let searchParams = new URLSearchParams(window.location.search);  
+    let searchParams = new URLSearchParams(window.location.search);
     const encryptedData = searchParams.get('data');
 
     let decryptedData = undefined;
@@ -100,9 +96,9 @@ function W2PSearch ({
     const urlTemlateStatus = searchParams.get('selectedTemlateStatus') || null;
     urlTemlateStatus && setSelectedTemlateStatus(urlTemlateStatus);
 
-    templatesSearch(urlQuery, urlSortType, urlSortDirection, urlSize, urlOffset, urlSelectedVdb, urlColor, urlFormat, urlOutput, urlTemlateStatus).then((data) => {      
+    templatesSearch(urlQuery, urlSortType, urlSortDirection, urlSize, urlOffset, urlSelectedVdb, urlColor, urlFormat, urlOutput, urlTemlateStatus).then((data) => {
       setProducts([]);
-      setProducts(data);      
+      setProducts(data);
     });
 
   }, []);
@@ -112,9 +108,9 @@ function W2PSearch ({
       setQuery(globalQuery);
       setOffset(0);
       const currentOffset = 0;
-      templatesSearch(globalQuery, sortType, sortDirection, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus).then((data) => {      
+      templatesSearch(globalQuery, sortType, sortDirection, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus).then((data) => {
         setProducts([]);
-        setProducts(data);      
+        setProducts(data);
       });
     } else return;
   }, [globalQuery]);
@@ -129,9 +125,9 @@ function W2PSearch ({
 
       setOffset(0);
       const currentOffset = 0;
-      templatesSearch(query, sortType, sortDirection, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus).then((data) => {      
+      templatesSearch(query, sortType, sortDirection, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus).then((data) => {
           setProducts([]);
-          setProducts(data);      
+          setProducts(data);
       });
   }, [selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus]);
 
@@ -141,32 +137,32 @@ function W2PSearch ({
 
   const updateSelectedColor = (selectedValues) => {
     setSelectedColor(selectedValues);
-  }; 
+  };
 
   const updateSelectedFormat = (selectedValues) => {
     setSelectedFormat(selectedValues);
-  }; 
-  
+  };
+
   const updateSelectedOutput = (selectedValues) => {
     setSelectedOutput(selectedValues);
-  }; 
+  };
 
   const updateSelectedTemlateStatus = (selectedValues) => {
     setSelectedTemlateStatus(selectedValues);
-  }; 
+  };
 
   const templatesSearch = async (query, sortType, sortDirection, size, offset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus) => {
-  
+
     const data = await templatesSearchService(query, sortType, sortDirection, size, offset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus);
 
     setProducts(data.rows);
-    setMatches(data.results);    
+    setMatches(data.results);
 
     const hasMoreAssets = offset < data.results - 25;
-    setHasMore(hasMoreAssets);     
+    setHasMore(hasMoreAssets);
 
     return data.rows;
-  };  
+  };
 
   const changeSorting = (e) => {
 
@@ -180,11 +176,10 @@ function W2PSearch ({
     setSortDirection(sortDirectionRaw);
     setOffset(0);
     const currentOffset = 0;
-    
 
-    templatesSearch(query, sortTypeRaw, sortDirectionRaw, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus).then((data) => {      
+    templatesSearch(query, sortTypeRaw, sortDirectionRaw, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus).then((data) => {
       setProducts([]);
-      setProducts(data);      
+      setProducts(data);
     });
   };
 
@@ -196,10 +191,10 @@ function W2PSearch ({
     setMatches(data.results);
 
     const hasMoreAssets = offset < data.results - 25 ? true : false;
-    setHasMore(hasMoreAssets); 
+    setHasMore(hasMoreAssets);
 
-    return data.rows;    
-  };      
+    return data.rows;
+  };
 
   const loadMoreTemplates = () => {
     const currentOffset = offset + 25;
@@ -208,7 +203,7 @@ function W2PSearch ({
 
     fetchMoreTemplates(query, sortType, sortDirection, size, currentOffset, selectedVdb, selectedColor, selectedFormat, selectedOutput, selectedTemlateStatus);
   }
-  
+
   const buttonProps = {
     detailsButton,
     favouritesButton,
@@ -221,7 +216,7 @@ function W2PSearch ({
   };
   const toggleListView = () => {
     setView("list");
-  }; 
+  };
 
   const encryptionKey = "XkhZG4fW2t2W";
 
@@ -245,7 +240,7 @@ function W2PSearch ({
 
   const encryptedParams = encryptData(params);
   const linkPath = `${baseURL}${apiBase}/Home/Search-Pages/W2P-Search?data=${encodeURIComponent(encryptedParams)}`;
-  
+
   const copyLinkToSearchResult = () => {
     navigator.clipboard.writeText(linkPath)
       .then(() => {
@@ -256,10 +251,10 @@ function W2PSearch ({
         }, 2500);
       })
   };
-  
+
   return (
     <div className="mpSearchComponent w2p">
-      <div className="staticSearch mpSearch">        
+      <div className="staticSearch mpSearch">
         <div className="searchFilters">
           <TemplateStatusFilter onUpdateSelectedTemlateStatus={updateSelectedTemlateStatus} selectedTemlateStatus={selectedTemlateStatus} />
           <TemplateVdbFilter onUpdateSelectedVdb={updateSelectedVdb} selectedVdb={selectedVdb}/>
@@ -267,7 +262,7 @@ function W2PSearch ({
           <TemplateFormatFilter onUpdateSelectedFormat={updateSelectedFormat} selectedFormat={selectedFormat}/>
           <TemplateOutputFilter onUpdateSelectedOutput={updateSelectedOutput} selectedOutput={selectedOutput}/>
         </div>
-      </div>      
+      </div>
       <div className="searchActions">
         <div className="searchResult">
           <div className="matches">{matches} matches</div>
@@ -286,8 +281,7 @@ function W2PSearch ({
               <option value="creationDate,desc">Not selected</option>
               <option value="creationDate,desc">Newest first</option>
               <option value="creationDate,asc">Oldest first</option>
-              {/* <option value="modificationDate,desc">Last updated first</option>
-              <option value="modificationDate,asc">Oldest updated first</option> */}
+              {}
               <option value="title,asc">Name (A-Z)</option>
               <option value="title,desc">Name (Z-A)</option>
             </select>
@@ -301,17 +295,17 @@ function W2PSearch ({
             </button>
           </div>
         </div>
-      </div>      
+      </div>
       {products && products.length > 0 ? (
         <>
           <div className={`mpSearchContainer ${view}`} style={{ gridTemplateColumns: `repeat(${perRow ? perRow : 5}, 1fr)` }}>
-            {products.map(c => 
+            {products.map(c =>
               <Card
                 templateData={c}
                 key={c.id}
                 buttonProps={buttonProps}
               />
-            )}            
+            )}
           </div>
           {hasMore && (
             <div className="loadMoreItems" style={{ width: "100%" }} ref={elementRef}>
@@ -323,7 +317,7 @@ function W2PSearch ({
         </>
       ) : (
         <div className='mpSearchContainer'>No Results</div>
-      )}      
+      )}
     </div>
   );
 }

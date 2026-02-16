@@ -20,14 +20,14 @@ function Navigation(props, ref) {
       });
       let lvl1ItemsHome = [data, ...lvl1Items];
       const activelvl1Items= lvl1ItemsHome.filter((item) => item.hide !== ("true" || true));
-      
+
       const addChildElements = (item) => {
         const navArrObj = {
           name: item.title || item["@name"],
           path: item["@path"],
           id: item["@id"],
           hide: item.hide || false
-        };        
+        };
         if (item["@nodes"].length > 0) {
           navArrObj.children = getChildren(item);
         }
@@ -35,7 +35,7 @@ function Navigation(props, ref) {
       };
 
       const getChildren = (item) => {
-        
+
         const childrenArr = [];
         item["@nodes"].forEach((childItem) => {
           const child = item[`${childItem}`];
@@ -54,7 +54,7 @@ function Navigation(props, ref) {
         return childrenArr;
       };
 
-      let navArr = [];      
+      let navArr = [];
       activelvl1Items.forEach((item) => {
         navArr.push(addChildElements(item));
       });
@@ -69,9 +69,9 @@ function Navigation(props, ref) {
 
   return (
     <React.Fragment>
-    <nav className="topNav" ref={ref}>        
+    <nav className="topNav" ref={ref}>
       <ul className ={`menus col-${navItems?.length}`}> {
-          navItems.map((item, index) => {            
+          navItems.map((item, index) => {
             const depthLevel = 0;
 
             return (
@@ -83,8 +83,8 @@ function Navigation(props, ref) {
               />
             );
           })
-      } 
-      </ul>       
+      }
+      </ul>
     </nav>
     </React.Fragment>
   )

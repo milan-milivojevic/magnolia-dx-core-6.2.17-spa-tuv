@@ -9,7 +9,7 @@ export default function DocumentDetailsFilter({ onUpdateSelectedDetails, selecte
   const [parents, setParents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
   useEffect(() => {
     fetch(`${baseUrl}/wp/rest/search-filters/instances`)
@@ -23,7 +23,6 @@ export default function DocumentDetailsFilter({ onUpdateSelectedDetails, selecte
         setSelectedOption(correspondingSelected || null);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedDetails]);
 
@@ -37,13 +36,13 @@ export default function DocumentDetailsFilter({ onUpdateSelectedDetails, selecte
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
-    
+
     if (selectedValue === "none") {
       setSelectedOption(null);
       onUpdateSelectedDetails(null);
       return;
     }
-    
+
     const selectedItem = parents.find(item => item.value === selectedValue);
     setSelectedOption(selectedItem);
     onUpdateSelectedDetails(selectedValue);

@@ -9,19 +9,19 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
   const [selectedOption, setSelectedOption] = useState(null);
   const [downloadOptions, setDownloadOptions] = useState([]);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
   useEffect(() => {
     fetch(`${baseUrl}/rest/mp/v1.0/assets/${assetId}/downloadSchemes?language=${language}`)
       .then(response => response.json())
       .then(data => {
-        let options = data[0]?.download_schemes.filter(scheme => 
+        let options = data[0]?.download_schemes.filter(scheme =>
           scheme.name === 'Original' || scheme.name === 'Standard'
         );
-        
+
         if (options.length === 2 && options[0].output_format === options[1].output_format) {
           options = [options.find(scheme => scheme.name === 'Original')];
-        }  
+        }
 
         setDownloadOptions(options);
 
@@ -30,13 +30,13 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
         }
 
       })
-      .catch(error => console.error('Error fetching download schemes:', error));
+      .catch(() => {});
   }, [assetId]);
 
   const handleRadioChange = (event) => {
     setSelectedOption(event.target.value);
   };
-  
+
   const download_version = 'FIXED';
   const licenseId = license?.id?.value || null;
   const licenseType = license?.licenseHolderName?.value;
@@ -79,10 +79,10 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
   const handleDownloadClick = () => {
     if (license && checkboxChecked) {
       downloadFile();
-      onClose();      
+      onClose();
     } else {
       downloadFile();
-      onClose();     
+      onClose();
     }
   };
 
@@ -92,15 +92,15 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
       onRequestClose={closeModal}
       contentLabel="Download Modal"
       className="downloadReactModal"
-    > 
+    >
       <div className='downloadModalWrapper'>
         <div class="closeButtonWrapper">
           <h2 className='titleId'>Asset Download (ID: <span>{assetId}</span>)</h2>
-          <button className="closeButton" onClick={closeModal}><AiOutlineClose/></button>          
+          <button className="closeButton" onClick={closeModal}><AiOutlineClose/></button>
         </div>
-        <div className='downloadModal'> 
+        <div className='downloadModal'>
           <div className="assetDownloadSchemes">
-            <h2 className='titleId'>Download As</h2>  
+            <h2 className='titleId'>Download As</h2>
             <div className='downloadOptions'>
               {downloadOptions.map(option => (
                 <label key={option.id}>
@@ -116,9 +116,9 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
               ))}
             </div>
           </div>
-          {license && 
-            <div className='licensePermission'>      
-              <h2 className='titleId'>Assets Requiring License Permission</h2>  
+          {license &&
+            <div className='licensePermission'>
+              <h2 className='titleId'>Assets Requiring License Permission</h2>
               <p className='licenseType'>
                 <span>License Type:</span> {licenseType}
               </p>
@@ -142,7 +142,7 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
                 using the asset).
               </label>
             </div>
-          }          
+          }
           <div className="downloadButton">
             <button
               onClick={handleDownloadClick}
@@ -153,7 +153,7 @@ const DownloadModal = ({ assetId, language, license, isOpen, onClose, closeModal
             </button>
           </div>
         </div>
-      </div>      
+      </div>
     </Modal>
   );
 };

@@ -13,14 +13,14 @@ function CorporateIdentityColorsConfig ({
   namePaddingLeft,
   previewStyle,
   previewHeight,
-  previewNameSize,  
+  previewNameSize,
   gap,
   componentWidth,
   componentPosition,
   wrapperPaddingTop,
   wrapperPaddingRight,
   wrapperPaddingBottom,
-  wrapperPaddingLeft,  
+  wrapperPaddingLeft,
   styleName
 }) {
 
@@ -28,12 +28,12 @@ function CorporateIdentityColorsConfig ({
 
   const useContainerDimensions = myRef => {
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 })
-  
+
     useEffect(() => {
       const getDimensions = () => ({
         width: myRef.current.offsetWidth,
         height: myRef.current.offsetHeight
-      })  
+      })
 
       const handleResize = () => {
         setDimensions(getDimensions())
@@ -42,14 +42,14 @@ function CorporateIdentityColorsConfig ({
       if (myRef.current) {
         setDimensions(getDimensions())
       }
-  
+
       window.addEventListener("resize", handleResize)
-  
+
       return () => {
         window.removeEventListener("resize", handleResize)
       }
     }, [myRef])
-  
+
     return dimensions;
   };
 
@@ -76,7 +76,7 @@ function CorporateIdentityColorsConfig ({
     fontSize: nameFontSize || null,
     fontFamily: nameFontFamily || null,
     color: nameColor || null,
-    textAlign: namePosition || null,    
+    textAlign: namePosition || null,
     fontWeight: nameBold || null,
     paddingTop: namePaddingTop || null,
     paddingRight: namePaddingRight || null,
@@ -108,9 +108,9 @@ function CorporateIdentityColorsConfig ({
         </button>
       </div>
       <div className={`corporateIdentityColors layout${layout}`} style={componentStyles}>
-        {activeColorNames.map((colors, i) =>      
+        {activeColorNames.map((colors, i) =>
           <div className={`corporateIdentityColor color${i}`} ref={widthRef} key={i}>
-            <div className="previewColor" 
+            <div className="previewColor"
                  style={{backgroundColor: multi[`multi${i}`]?.previewColor,
                          border: multi[`multi${i}`]?.previewBorder,
                          borderRadius: borderRadius,
@@ -124,8 +124,8 @@ function CorporateIdentityColorsConfig ({
               {showName ? multi[`multi${i}`]?.colorName : null}
             </div>
             <div className="colorName" style={nameStyles}>{multi[`multi${i}`]?.colorName}</div>
-            <div className={`colorModes`} 
-                 dangerouslySetInnerHTML={{ __html:multi[`multi${i}`]?.colorModes || null }}  
+            <div className={`colorModes`}
+                 dangerouslySetInnerHTML={{ __html:multi[`multi${i}`]?.colorModes || null }}
             ></div>
           </div>
         )}
@@ -133,7 +133,5 @@ function CorporateIdentityColorsConfig ({
     </div>
   )
 }
-
-
 
 export default CorporateIdentityColorsConfig;

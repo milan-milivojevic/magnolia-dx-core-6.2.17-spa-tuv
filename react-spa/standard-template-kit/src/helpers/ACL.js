@@ -1,4 +1,3 @@
-import { async } from "@magnolia/react-editor/build/mgnl-react-editor";
 import { getAPIBase } from "./AppHelpers";
 
 export async function aclCheck(
@@ -8,9 +7,9 @@ export async function aclCheck(
 ) {
 
   const apiBase = getAPIBase();
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
-  let orgUnitName = null;  
+  let orgUnitName = null;
   let orgUnitIdMgnl = null;
   let vdbGroupName = null;
   let vdbGroupIdMgnl = null;
@@ -21,10 +20,10 @@ export async function aclCheck(
       fetch(`${baseUrl}/rest/administration/users/current`).then(res => res.json()),
       fetch(`${baseUrl}/rest/sso/users/current`).then(res => res.json())
     ]);
-  
+
     orgUnitName = "BM_" + orgUnitNameResponse.orgUnitName;
     vdbGroupName = "VDBG_" + vdbGroupNameResponse.vdbGroupName;
-  } 
+  }
 
   await fetchUserGroups();
 
@@ -33,11 +32,11 @@ export async function aclCheck(
     const data = await response.json();
     const vdbGroupMgnl = data.results.find(item => item["@name"] === vdbGroupName);
     vdbGroupIdMgnl = vdbGroupMgnl["@id"];
-    
+
     vdbs = Object.keys(vdbGroupMgnl.groups)
     .filter(key => !key.startsWith('@'))
     .map(key => vdbGroupMgnl.groups[key]);
-    
+
     const orgUnitMgnl = data.results.find(item => item["@name"] === orgUnitName);
     orgUnitIdMgnl = orgUnitMgnl["@id"];
   }
@@ -58,7 +57,7 @@ export async function aclCheck(
         showComponent = true;
       } else if (allowedGroups?.length !== 0 || deniedGroups?.length !== 0) {
         allowedGroups?.forEach((allowedGroup) => {
-            userGroupsIds.forEach((groupId) => {  
+            userGroupsIds.forEach((groupId) => {
             if (groupId === allowedGroup) {
               allowed_check = "true";
               return;
@@ -76,7 +75,7 @@ export async function aclCheck(
                 return;
             }
           });
-          
+
           if (denied_check === "true") {
           }
        });
@@ -94,8 +93,6 @@ export async function aclCheck(
     } else {
       showComponent = false;
     }
-    console.log("showComponent");
-    console.log(showComponent);
     return showComponent;
   }
 

@@ -12,9 +12,8 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [tempParents, setTempParents] = useState([]);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
-  /* Dohvatanje Filtera */
   useEffect(() => {
     fetch(`${baseUrl}/rest/mp/v1.1/suffixes`)
       .then((response) => response.json())
@@ -24,11 +23,8 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
         setInitialParents(transformedParents);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedSuffixes]);
-
-  /*Mapiranje Filtera*/
 
   const mapData = (data) => {
     return data.map(item => {
@@ -36,7 +32,7 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
         id: item.name,
         label: item.label,
         children: item.suffixes.map((suffix, index) => ({
-          id: index + 1, // Ovde koristimo index za ID deteta, ali možete koristiti bilo koju logiku koja vam odgovara
+          id: index + 1,
           label: suffix,
           value: suffix,
           isChecked: selectedSuffixes?.includes(suffix.toString())
@@ -45,9 +41,6 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
       return mappedItem;
     });
   };
-
-
-  /* Otvaranje Filtera i Dropdowna  */
 
   const extractCheckStates = (items) => {
     return items.map(item => {
@@ -64,25 +57,23 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
       setTempParents(tempCheckStates);
     }
     setIsFilterOpen(!isFilterOpen);
-  };  
+  };
 
   const toggleParentDropdown = (parentId) => {
-    setParents((prevState) => {      
+    setParents((prevState) => {
       return prevState.map((parent) => {
         if (parent.id === parentId) {
           parent.isParentOpen = !parent.isParentOpen;
-        }       
+        }
         return parent;
       });
     });
   };
 
-  /* Hendlovanje promena stanja Checkbox-ova */
-
   const toggleParentCheckbox = (parentId) => {
     setParents((prevState) => {
       return prevState.map((parent) => {
-        if (parent.id === parentId) {          
+        if (parent.id === parentId) {
           const allChildrenChecked = parent.children.every((child) => child.isChecked);
           parent.children = parent.children.map((child) => {
             child.isChecked = !allChildrenChecked;
@@ -93,11 +84,10 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
       });
     });
   };
-  
 
   const toggleChildCheckbox = (parentId, childId) => {
     setParents((prevState) => {
-      return prevState.map((parent) => {   
+      return prevState.map((parent) => {
         if (parent.id === parentId) {
           parent.children = parent.children.map((child) => {
             if (child.id === childId) {
@@ -109,9 +99,7 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
         return parent;
       });
     });
-  };  
-
-   /* Pakovanje selektovanih vrednosti u niz i zatvaranje filtera */
+  };
 
   const applySelection = () => {
     const values = [];
@@ -127,10 +115,8 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
     setIsFilterOpen(false);
   };
 
-  /* Restartovanje stanja svih Checkboxova */
-
   const clearAll = () => {
-    setParents(initialParents.map(parent => {     
+    setParents(initialParents.map(parent => {
       parent.isChecked = false;
       parent.children?.forEach(child => {
         child.isChecked = false;
@@ -148,7 +134,7 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
       };
     });
   };
-  
+
   const cancel = () => {
     const resetParents = resetCheckStates(parents, tempParents);
     setParents(resetParents);
@@ -215,7 +201,7 @@ export default function FileInfoFilter({onUpdateSelectedSuffixes, selectedSuffix
               </div>
             ))}
           </div>
-          <div className="filterActionButtons">            
+          <div className="filterActionButtons">
             <button className="clearButton" onClick={clearAll}>Clear All</button>
             <div>
               <button className="cancelButton" onClick={cancel}>Cancel</button>

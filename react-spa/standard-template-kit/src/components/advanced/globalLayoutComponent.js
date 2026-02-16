@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useId } from 'react';
 import { BsArrowRight, BsChevronRight } from "react-icons/bs";
 import { TfiDownload } from "react-icons/tfi";
-import { IoAtSharp } from "react-icons/io5";
 import { getAPIBase, getRouterBasename, isPublicInstance } from '../../helpers/AppHelpers';
 import styled from 'styled-components';
-import { ReactComponent as ArrowsIcon } from '../../images/home/ArrowsIcon.svg';
-import { ReactComponent as DownloadIcon } from '../../images/home/DownloadIcon.svg';
-
 
 const Wrapper = styled.div`
   .globalLayoutComponent:hover {
@@ -17,10 +13,10 @@ const Wrapper = styled.div`
     color: ${(props) => props.hovLabelColor && props.hovLabelColor + "!important"};
     border-color: ${(props) => props.hovLinkBorderColor && props.hovLinkBorderColor + "!important"};
   }
-  .link svg { 
+  .link svg {
     color: ${(props) => props.defChevronColor && props.defChevronColor + "!important"};
   }
-  .link:hover svg { 
+  .link:hover svg {
     color: ${(props) => props.hovChevronColor && props.hovChevronColor + "!important"};
   }
   .image1:hover, .video1Component video:hover  {
@@ -35,8 +31,8 @@ const Wrapper = styled.div`
 }`
 
 function GlobalLayoutComponent ({
-  headline, 
-  navigationId,  
+  headline,
+  navigationId,
   headlineLevel,
   headlineFontFamily,
   headlinePosition,
@@ -102,7 +98,7 @@ function GlobalLayoutComponent ({
   media1Type,
   image1,
   embed1,
-  video1, 
+  video1,
   autoplay1,
   loop1,
   muted1,
@@ -110,11 +106,11 @@ function GlobalLayoutComponent ({
   media2Type,
   image2,
   embed2,
-  video2, 
+  video2,
   autoplay2,
   loop2,
   muted2,
-  controls2,        
+  controls2,
   image1BorderColor,
   image1BorderWidth,
   image1BorderStyle,
@@ -134,7 +130,7 @@ function GlobalLayoutComponent ({
   image1DefaultBackColor,
   image1HoverBackColor,
   image2DefaultBackColor,
-  image2HoverBackColor,    
+  image2HoverBackColor,
   wrapperPaddingTop,
   wrapperPaddingRight,
   wrapperPaddingBottom,
@@ -157,23 +153,23 @@ function GlobalLayoutComponent ({
   image2Width,
   imagesHorizontalPosition,
   imagesHeight,
-  imagesGap,   
+  imagesGap,
   imagesFit,
-  imagesPosition, 
+  imagesPosition,
   linkStyleName,
   linkNoStyles,
   styleName,
   noStyles,
 }) {
 
-  const id = useId(); 
+  const id = useId();
 
   const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
-  const apiBase = getAPIBase();  
+  const apiBase = getAPIBase();
   const isPublic = isPublicInstance();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;    
-    
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
+
   const [configProps, setconfigProps] = useState();
 
   useEffect(() => {
@@ -185,11 +181,11 @@ function GlobalLayoutComponent ({
           result = data[0];
         } else if (noStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setconfigProps(result);
       });
   }, [styleName, noStyles, apiBase, restPath, nodeName]);
-  
+
   const [linkConfigProps, setLinkConfigProps] = useState();
 
   useEffect(() => {
@@ -202,17 +198,16 @@ function GlobalLayoutComponent ({
           result = data[0];
         } else if (linkNoStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setLinkConfigProps(result);
       });
   }, [linkStyleName, linkNoStyles, configProps?.linkStyleName, , configProps?.linkNoStyles, apiBase, restPath, nodeName]);
-  
 
   const linkExist = page || external || download || null;
 
-  const HeadlineLevel = headlineLevel || configProps?.headlineLevel || "h1";  
-  const downloadLink = download ? download['@link']: baseUrl;  
-  // const downloadLink = download ? baseUrl + isPublic ? download['@link'].replace("cmsAuthor", "cmsPublic") : download['@link'] : baseUrl;
+  const HeadlineLevel = headlineLevel || configProps?.headlineLevel || "h1";
+  const downloadLink = download ? download['@link']: baseUrl;
+
   const externalLink = isPublic ? external?.replace("cmsAuthor", "cmsPublic") : external?.replace("cmsPublic", "cmsAuthor");
   const href = linkType === "page" ? (getRouterBasename() + page)?.replace("//", "/")?.replace("Home/Home", "Home") : linkType === "external" ? externalLink : downloadLink;
 
@@ -233,7 +228,6 @@ function GlobalLayoutComponent ({
   const defLinkBorderColor = linkBorderColor || configProps?.linkBorderColor || linkConfigProps?.linkBorderColor || null;
   const hovLinkBorderColor = linkBorderHoverColor || configProps?.linkBorderHoverColor || linkConfigProps?.linkBorderHoverColor || defLinkBorderColor;
 
-
   const img1DefBgColor = image1DefaultBackColor || configProps?.image1DefaultBackColor || null;
   const img1HovBgColor = image1HoverBackColor || configProps?.image1HoverBackColor || null;
 
@@ -241,7 +235,7 @@ function GlobalLayoutComponent ({
   const img2HovBgColor = image2HoverBackColor || configProps?.image2HoverBackColor || null;
 
   const linkIcons = linkIcon || configProps?.linkIcon || linkConfigProps?.linkIcon || "";
-  
+
   const globalLayoutComponentStyles = {
     paddingTop: wrapperPaddingTop || configProps?.wrapperPaddingTop || null,
     paddingRight: wrapperPaddingRight || configProps?.wrapperPaddingRight || null,
@@ -280,7 +274,6 @@ function GlobalLayoutComponent ({
         : { justifyContent: descLinkPosition || configProps?.descLinkPosition || null }
     )
   };
-  
 
   const descriptionStyles = {
     width: descRowLayoutWidth || configProps?.descRowLayoutWidth || null,
@@ -292,7 +285,7 @@ function GlobalLayoutComponent ({
     borderWidth: descriptionBorderWidth || configProps?.descriptionBorderWidth || null,
     borderStyle: descriptionBorderStyle || configProps?.descriptionBorderStyle || null,
     borderRadius: descriptionBorderRadius || configProps?.descriptionBorderRadius || null,
-    textAlign: descriptionAlign || configProps?.descriptionAlign || null    
+    textAlign: descriptionAlign || configProps?.descriptionAlign || null
   }
 
   const linkComponentStyles = {
@@ -300,7 +293,7 @@ function GlobalLayoutComponent ({
     paddingTop: linkPaddingTop || configProps?.linkPaddingTop || linkConfigProps?.linkPaddingTop || null,
     paddingRight: linkPaddingRight || configProps?.linkPaddingRight || linkConfigProps?.linkPaddingRight || null,
     paddingBottom: linkPaddingBottom || configProps?.linkPaddingBottom || linkConfigProps?.linkPaddingBottom || null,
-    paddingLeft: linkPaddingLeft || configProps?.linkPaddingLeft || linkConfigProps?.linkPaddingLeft || null, 
+    paddingLeft: linkPaddingLeft || configProps?.linkPaddingLeft || linkConfigProps?.linkPaddingLeft || null,
     justifyContent: linkHorizontalPosition || configProps?.linkHorizontalPosition || "flex-start",
     alignItems: linkVerticalPosition || configProps?.linkVerticalPosition || "flex-start"
   }
@@ -311,7 +304,7 @@ function GlobalLayoutComponent ({
     paddingTop: labelPaddingTop || configProps?.labelPaddingTop || linkConfigProps?.labelPaddingTop || null,
     paddingRight: labelPaddingRight || configProps?.labelPaddingRight || linkConfigProps?.labelPaddingRight || null,
     paddingBottom: labelPaddingBottom || configProps?.labelPaddingBottom || linkConfigProps?.labelPaddingBottom || null,
-    paddingLeft: labelPaddingLeft || configProps?.labelPaddingLeft || linkConfigProps?.labelPaddingLeft || null, 
+    paddingLeft: labelPaddingLeft || configProps?.labelPaddingLeft || linkConfigProps?.labelPaddingLeft || null,
     borderColor: linkBorderColor || configProps?.linkBorderColor || linkConfigProps?.linkBorderColor || null,
     borderWidth: linkBorderWidth || configProps?.linkBorderWidth || linkConfigProps?.linkBorderWidth || null,
     borderStyle: linkBorderStyle || configProps?.linkBorderStyle || linkConfigProps?.linkBorderStyle || null,
@@ -368,29 +361,29 @@ function GlobalLayoutComponent ({
       hovLinkBorderColor={hovLinkBorderColor}
       defChevronColor={defChevronColor}
       hovChevronColor={hovChevronColor}
-      img1HovBgColor={img1HovBgColor} 
-      img2HovBgColor={img2HovBgColor}        
+      img1HovBgColor={img1HovBgColor}
+      img2HovBgColor={img2HovBgColor}
       descColor={descriptionColor || configProps?.descriptionColor || null}
     >
       {layouts !== "layout4" ?
-        <div className={`globalLayoutComponent ${layouts}`} id={navigationId && navigationId} style={globalLayoutComponentStyles}>         
-          {headline &&          
+        <div className={`globalLayoutComponent ${layouts}`} id={navigationId && navigationId} style={globalLayoutComponentStyles}>
+          {headline &&
             <HeadlineLevel className="headline"style={headlineStyles}>
               {headline ? headline : null}
             </HeadlineLevel>
-          }       
+          }
           <div className='imageComponentWrapper flex' style={{gap: imagesGap || configProps?.imagesGap || null, justifyContent: imagesHorizontalPosition || configProps?.imagesHorizontalPosition || null}}>
             {media1Type === "image1" && image1 &&
               <div style={{width:image1Width || configProps?.image1Width || "auto"}}>
-                {/* <img className="image image1" src={isPublic ? image1['@link'].replace("cmsAuthor", "cmsPublic") : image1['@link']} alt="" style={image1Styles}/> */}
+                {}
                 <img className="image image1" src={image1['@link']} alt="" style={image1Styles}/>
               </div>
             }
             {media1Type === "video1" && video1 &&
               <div className="video1Component" style={{width:image1Width || configProps?.image1Width || "auto"}}>
-                <video 
-                  // src={isPublic ? video1['@link'].replace("cmsAuthor", "cmsPublic") : video1['@link']} 
-                  src={video1['@link']} 
+                <video
+
+                  src={video1['@link']}
                   style={image1Styles}
                   preload="auto"
                   autoPlay={autoplay1 === (false || "false") ? null : "autoplay"}
@@ -403,21 +396,21 @@ function GlobalLayoutComponent ({
               </div>
             }
             {media1Type === "embed1" && embed1 &&
-              <div className="embedVideo1Component" style={{width:image1Width || configProps?.image1Width || "auto"}} 
+              <div className="embedVideo1Component" style={{width:image1Width || configProps?.image1Width || "auto"}}
                 dangerouslySetInnerHTML={{ __html:embed1 || null }}>
               </div>
             }
             {media2Type === "image2" && image2 &&
               <div style={{width:image2Width || configProps?.image2Width || "auto"}}>
-                {/* <img className="image image2" src={isPublic ? image2['@link'].replace("cmsAuthor", "cmsPublic") : image2['@link']} alt="" style={image2Styles}/> */}
+                {}
                 <img className="image image2" src={image2['@link']} alt="" style={image2Styles}/>
               </div>
             }
             {media2Type === "video2" && video2 &&
               <div className="video2Component" style={{width:image2Width || configProps?.image2Width || "auto"}}>
-                <video 
-                  src={video2['@link']} 
-                  // src={isPublic ? video2['@link'].replace("cmsAuthor", "cmsPublic") : video2['@link']} 
+                <video
+                  src={video2['@link']}
+
                   style={image2Styles}
                   preload="auto"
                   autoPlay={autoplay2 === (false || "false") ? null : "autoplay"}
@@ -430,47 +423,47 @@ function GlobalLayoutComponent ({
               </div>
             }
             {media2Type === "embed2" && embed2 &&
-              <div className="embedVideo2Component" style={{width:image2Width || configProps?.image2Width || "auto"}} 
+              <div className="embedVideo2Component" style={{width:image2Width || configProps?.image2Width || "auto"}}
                 dangerouslySetInnerHTML={{ __html:embed2 || null }}>
               </div>
             }
           </div>
           <div className='descriptionLinkWrapper flex' style={descriptionLinkWrapperStyles}>
             {description &&
-              <div className={`description ${descriptionStyle}`} 
-                  dangerouslySetInnerHTML={{ __html:description || null }} 
-                  style={descriptionStyles}>                  
+              <div className={`description ${descriptionStyle}`}
+                  dangerouslySetInnerHTML={{ __html:description || null }}
+                  style={descriptionStyles}>
               </div>
             }
             {linkExist &&
               <div className='linkComponent flex' style={linkComponentStyles}>
                 <a className='link' href={href} target={linkLocation || configProps?.linkLocation || linkConfigProps?.linkLocation || "_blank"} rel="noreferrer" style= {linkStyles}>
-                  {linkLabel ? linkLabel : ""} 
+                  {linkLabel ? linkLabel : ""}
                   {linkIcons === "BsChevronRight" ? <BsChevronRight /> : linkIcons === "BsArrowRight" ? <BsArrowRight /> : linkIcons === "TfiDownload" ? <TfiDownload /> : ""}
                 </a>
               </div>
-            }      
-          </div>  
+            }
+          </div>
         </div>
         :
-        <div className={`globalLayoutComponent ${layouts}`} style={globalLayoutComponentStyles}>         
-          {headline &&          
+        <div className={`globalLayoutComponent ${layouts}`} style={globalLayoutComponentStyles}>
+          {headline &&
             <HeadlineLevel className="headline" style={headlineStyles}>
               {headline ? headline : null}
             </HeadlineLevel>
-          }       
+          }
           <div className='imageComponentWrapper flex' style={{gap: imagesGap || configProps?.imagesGap || null, justifyContent: imagesHorizontalPosition || configProps?.imagesHorizontalPosition || null}}>
             {media1Type === "image1" && image1 &&
               <div style={{width:image1Width || configProps?.image1Width || "auto"}}>
-                {/* <img className="image image1" src={isPublic ? image1['@link'].replace("cmsAuthor", "cmsPublic") : image1['@link']} alt="" style={image1Styles}/> */}
+                {}
                 <img className="image image1" src={image1['@link']} alt="" style={image1Styles}/>
               </div>
             }
             {media1Type === "video1" && video1 &&
               <div className="video1Component" style={{width:image1Width || configProps?.image1Width || "auto"}}>
-                <video 
-                  // src={isPublic ? video1['@link'].replace("cmsAuthor", "cmsPublic") : video1['@link']} 
-                  src={video1['@link']} 
+                <video
+
+                  src={video1['@link']}
                   style={image1Styles}
                   preload="auto"
                   autoPlay={autoplay1 === (false || "false") ? null : "autoplay"}
@@ -483,21 +476,21 @@ function GlobalLayoutComponent ({
               </div>
             }
             {media1Type === "embed1" && embed1 &&
-              <div className="embedVideo1Component" style={{width:image1Width || configProps?.image1Width || "auto"}} 
+              <div className="embedVideo1Component" style={{width:image1Width || configProps?.image1Width || "auto"}}
                 dangerouslySetInnerHTML={{ __html:embed1 || null }}>
               </div>
             }
             {media2Type === "image2" && image2 &&
               <div style={{width:image2Width || configProps?.image2Width || "auto"}}>
-                {/* <img className="image image2" src={isPublic ? image2['@link'].replace("cmsAuthor", "cmsPublic") : image2['@link']} alt="" style={image2Styles}/> */}
+                {}
                 <img className="image image2" src={image2['@link']} alt="" style={image2Styles}/>
               </div>
             }
             {media2Type === "video2" && video2 &&
               <div className="video2Component" style={{width:image2Width || configProps?.image2Width || "auto"}}>
-                <video 
-                  src={video2['@link']} 
-                  // src={isPublic ? video2['@link'].replace("cmsAuthor", "cmsPublic") : video2['@link']} 
+                <video
+                  src={video2['@link']}
+
                   style={image2Styles}
                   preload="auto"
                   autoPlay={autoplay2 === (false || "false") ? null : "autoplay"}
@@ -510,25 +503,25 @@ function GlobalLayoutComponent ({
               </div>
             }
             {media2Type === "embed2" && embed2 &&
-              <div className="embedVideo2Component" style={{width:image2Width || configProps?.image2Width || "auto"}} 
+              <div className="embedVideo2Component" style={{width:image2Width || configProps?.image2Width || "auto"}}
                 dangerouslySetInnerHTML={{ __html:embed2 || null }}>
               </div>
             }
           </div>
           {description &&
-            <div className={`description ${descriptionStyle}`} 
-                dangerouslySetInnerHTML={{ __html:description || null }} 
-                style={descriptionStyles}>                  
+            <div className={`description ${descriptionStyle}`}
+                dangerouslySetInnerHTML={{ __html:description || null }}
+                style={descriptionStyles}>
             </div>
           }
           {linkExist &&
             <div className='linkComponent flex' style={linkComponentStyles}>
               <a className={`link ${linkIcon}`} href={href} target={linkLocation || configProps?.linkLocation || linkConfigProps?.linkLocation || "_blank"} rel="noreferrer" style= {linkStyles}>
-                {linkLabel ? linkLabel : ""} 
+                {linkLabel ? linkLabel : ""}
                 {linkIcons === "BsChevronRight" ? <BsChevronRight /> : linkIcons === "BsArrowRight" ? <BsArrowRight /> : linkIcons === "TfiDownload" ? <TfiDownload /> : ""}
               </a>
             </div>
-          }      
+          }
         </div>
       }
     </Wrapper>

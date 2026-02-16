@@ -1,11 +1,9 @@
 import { React, useState, useEffect, useRef } from 'react';
 import { BsArrowRight, BsChevronRight } from "react-icons/bs";
-import { TfiDownload } from "react-icons/tfi";
 import { GrDownload } from "react-icons/gr";
 import { getAPIBase, getRouterBasename } from '../../../helpers/AppHelpers';
 import styled from 'styled-components';
 import { ReactComponent as ArrowsIcon } from '../../../images/home/ArrowsIcon.svg';
-import { ReactComponent as DownloadIcon } from '../../../images/home/DownloadIcon.svg';
 
 const Wrapper = styled.div`
   .borderTeaser:hover {
@@ -17,10 +15,10 @@ const Wrapper = styled.div`
     color: ${(props) => props.hovLabelColor && props.hovLabelColor + "!important"};
     border-color: ${(props) => props.hovLinkBorderColor && props.hovLinkBorderColor + "!important"};
   }
-  .link svg { 
+  .link svg {
     color: ${(props) => props.defChevronColor && props.defChevronColor + "!important"};
   }
-  .link:hover svg { 
+  .link:hover svg {
     color: ${(props) => props.hovChevronColor && props.hovChevronColor + "!important"};
   }
   .description {
@@ -29,7 +27,7 @@ const Wrapper = styled.div`
 `;
 
 function BorderTeaserConfig ({
-  headline,   
+  headline,
   headlineLevel,
   headlineFontFamily,
   headlinePosition,
@@ -99,7 +97,7 @@ function BorderTeaserConfig ({
   componentPaddingBottom,
   componentPaddingLeft,
   componentDefaultBackColor,
-  componentHoverBackColor,  
+  componentHoverBackColor,
   componentBorderColor,
   componentBorderHoverColor,
   componentBorderWidth,
@@ -107,7 +105,7 @@ function BorderTeaserConfig ({
   componentBorderRadius,
   componentWidth,
   componentHeight,
-  componentPosition,    
+  componentPosition,
   teaserLayout,
   descLinkLayout,
   descRowLayoutWidth,
@@ -121,7 +119,7 @@ function BorderTeaserConfig ({
   linkNoStyles,
   styleName,
   }) {
-  
+
   const myRef = useRef(null);
 
   const handleClick = () => {
@@ -132,8 +130,8 @@ function BorderTeaserConfig ({
   const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;    
-  
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
+
   const [linkConfigProps, setLinkConfigProps] = useState();
 
   useEffect(() => {
@@ -145,7 +143,7 @@ function BorderTeaserConfig ({
           result = data[0];
         } else if (linkNoStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setLinkConfigProps(result);
       });
   }, [linkStyleName, linkNoStyles, apiBase, restPath, nodeName]);
@@ -155,12 +153,12 @@ function BorderTeaserConfig ({
   };
 
   const HeadlineLevel = headlineLevel || "h1";
-  const downloadLink = download ? download['@link'] : baseUrl;  
+  const downloadLink = download ? download['@link'] : baseUrl;
   const href = linkType === "page" ? (getRouterBasename() + page).replace("//", "/").replace("Home/Home", "Home") : linkType === "external" ? external : downloadLink;
 
   const cursorPointer = clickableComponent === "true" ? "cursorPointer" : null;
 
-  const defBgColor = componentDefaultBackColor || null;  
+  const defBgColor = componentDefaultBackColor || null;
   const hovBgColor = componentHoverBackColor || defBgColor;
 
   const defBorderColor = componentBorderColor || null;
@@ -187,7 +185,7 @@ function BorderTeaserConfig ({
     paddingTop: componentPaddingTop || null,
     paddingRight: componentPaddingRight || null,
     paddingBottom: componentPaddingBottom || null,
-    paddingLeft: componentPaddingLeft || null,    
+    paddingLeft: componentPaddingLeft || null,
     backgroundColor: defBgColor,
     borderColor: componentBorderColor || null,
     borderWidth: componentBorderWidth || null,
@@ -232,7 +230,7 @@ function BorderTeaserConfig ({
     borderWidth: descriptionBorderWidth || null,
     borderStyle: descriptionBorderStyle || null,
     borderRadius: descriptionBorderRadius || null,
-    textAlign: descriptionAlign || null    
+    textAlign: descriptionAlign || null
   }
 
   const linkComponentStyles = {
@@ -245,13 +243,13 @@ function BorderTeaserConfig ({
     alignItems: linkVerticalPosition || "flex-start"
   }
 
-  const linkStyles = { 
+  const linkStyles = {
     backgroundColor: defLinkBgColor,
     color: defLabelColor,
     paddingTop: labelPaddingTop || linkConfigProps?.labelPaddingTop || null,
     paddingRight: labelPaddingRight || linkConfigProps?.labelPaddingRight || null,
     paddingBottom: labelPaddingBottom || linkConfigProps?.labelPaddingBottom || null,
-    paddingLeft: labelPaddingLeft || linkConfigProps?.labelPaddingLeft || null, 
+    paddingLeft: labelPaddingLeft || linkConfigProps?.labelPaddingLeft || null,
     borderColor: defLinkBorderColor,
     borderWidth: linkBorderWidth || linkConfigProps?.linkBorderWidth || null,
     borderStyle: linkBorderStyle || linkConfigProps?.linkBorderStyle || null,
@@ -289,17 +287,17 @@ function BorderTeaserConfig ({
         </button>
       </div>
       <div className={`borderTeaserComponent flex`} style={{ justifyContent: componentPosition || null }}>
-        <div className={`borderTeaser flexColumn ${cursorPointer}`} 
+        <div className={`borderTeaser flexColumn ${cursorPointer}`}
              onClick={clickableComponent === "true" ? openLink : null}
              style={borderTeaserStyles}
         >
-          {headline && 
+          {headline &&
             <HeadlineLevel className="headline" style={headlineStyles}>
               <span className='customHeadlineArrows' style={arrowsHeightVar}>
                 {(addArrowsVar !== "false" || false) && <ArrowsIcon/>}
               </span>{headline || null}
             </HeadlineLevel>
-          }   
+          }
           <div className='descriptionLinkWrapper flex' style={descriptionLinkWrapperStyles}>
             { description &&
               <div className={`description ${descriptionStyle || null}`}
@@ -309,8 +307,8 @@ function BorderTeaserConfig ({
             }
             {(linkIcons || linkLabel) &&
               <div className='linkComponent flex' style={linkComponentStyles}>
-                <a className='link' href={href} style={linkStyles} target={linkLocation || "_blank"} rel="noreferrer" > 
-                  {linkLabel || ""} 
+                <a className='link' href={href} style={linkStyles} target={linkLocation || "_blank"} rel="noreferrer" >
+                  {linkLabel || ""}
                   {linkIcons === "BsChevronRight" ? <BsChevronRight /> : linkIcons === "BsArrowRight" ? <BsArrowRight /> : linkIcons === "TfiDownload" ? <GrDownload /> : ""}
                 </a>
               </div>

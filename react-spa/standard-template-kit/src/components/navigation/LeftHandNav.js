@@ -33,7 +33,7 @@ function LeftHandNav(props, ref) {
           path: item["@path"],
           id: item["@id"],
           hide: item.hide || false
-        };        
+        };
         if (item["@nodes"].length > 0) {
           navArrObj.children = getChildren(item);
         }
@@ -47,7 +47,7 @@ function LeftHandNav(props, ref) {
           const childObject = {
             name: child.title || child["@name"],
             path: child.componentId === undefined ? child["@path"] : item["@path"] + "#" + child.componentId,
-            //path: child.componentId === undefined ? child["@path"] : item["@path"],
+
             flatPath: child.componentId === undefined ? child["@path"] : item["@path"],
             componentId: child.componentId === undefined ? undefined : "#" + child.componentId,
             id: child["@id"],
@@ -62,7 +62,7 @@ function LeftHandNav(props, ref) {
         return childrenArr;
       };
 
-      let navArr = [];      
+      let navArr = [];
       activelvl1Items.forEach((item) => {
         navArr.push(addChildElements(item));
       });
@@ -76,11 +76,11 @@ function LeftHandNav(props, ref) {
   }, [navItems]);
 
   return (
-    <nav className="leftHandNav" ref={ref}>        
+    <nav className="leftHandNav" ref={ref}>
       <ul className = "menus"> {
-          navItems.map((item, index) => {            
+          navItems.map((item, index) => {
             const depthLevel = 0;
-            
+
             return (
               <LeftNavMenuItem
                 item = {item}
@@ -90,8 +90,8 @@ function LeftHandNav(props, ref) {
               />
             );
           })
-      } 
-      </ul> 
+      }
+      </ul>
     </nav>
   )
 };

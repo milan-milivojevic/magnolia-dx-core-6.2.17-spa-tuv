@@ -1,20 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import "../../styles/mediaPool/slick-theme.css"
 import "../../styles/mediaPool/slick.css"
-import { BsFillGrid3X3GapFill } from 'react-icons/bs';
-import { FaThList } from 'react-icons/fa';
 import { elasticSearchService, idSearch } from '../../api/searchService'
 import Card from './helpers/Card';
 import CryptoJS from 'crypto-js';
 
-function MpCustomSearch ({ 
-  assetIds, 
-  linkToSearchResult, 
-  
+function MpCustomSearch ({
+  assetIds,
+  linkToSearchResult,
+
   cardsLimit,
   perRow,
   sortOrder,
-  defaultView, 
+  defaultView,
 
   downloadButton,
   emailButton,
@@ -41,20 +39,12 @@ function MpCustomSearch ({
 
   const [products, setProducts] = useState([]);
 
-  // const assetIdsArray = [];
-
-  // for (const key in assetsIds) {
-  //   if (key.startsWith('assetsIds')) {
-  //     assetIdsArray.push(assetsIds[key].assetId);
-  //   }
-  // }  
-
   const assetIdsArray = assetIds?.split(',').map(assetId => assetId.trim());
 
   const elasticSearch = async () => {
 
     let url = new URL(linkToSearchResult);
-    let searchParams = new URLSearchParams(url.search);  
+    let searchParams = new URLSearchParams(url.search);
     const encryptedData = searchParams.get('data');
 
     let decryptedData = undefined;
@@ -63,7 +53,6 @@ function MpCustomSearch ({
       searchParams = new URLSearchParams(decryptedData)
     }
 
-
     const query =  searchParams.get('query') || "";
     const isAsc = searchParams.get('isAsc') || initialIsAsc;
     const offset = searchParams.get('offset') || 0;
@@ -71,8 +60,6 @@ function MpCustomSearch ({
     const limit = cardsLimit || searchParams.get('limit') || 25;
     const assetIdsArrayLength = assetIdsArray ? assetIdsArray.length : 0;
     const calculatedLimit = parseInt(limit, 10) > 60 ? 60 : parseInt(limit, 10) - assetIdsArrayLength;
-    console.log("calculatedLimit");
-    console.log(calculatedLimit);
 
     let selectedCategories = [];
     let selectedSuffixes = [];
@@ -86,7 +73,7 @@ function MpCustomSearch ({
     const suffixesString = searchParams.get('selectedSuffixes') || null;
     if (suffixesString) {
       selectedSuffixes = suffixesString.split(',');
-    } 
+    }
     const tagsString = searchParams.get('selectedTags') || null;
     if (tagsString) {
       selectedTags = tagsString.split(',');
@@ -107,7 +94,7 @@ function MpCustomSearch ({
 
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     return decryptedData;
-  };  
+  };
 
   const idsSearch = async () => {
     try {
@@ -118,14 +105,13 @@ function MpCustomSearch ({
       const flattenedAssets = assetsData.flat();
       setProducts(flattenedAssets);
     } catch (error) {
-      console.error('Error fetching data:', error);
     }
-  }; 
+  };
 
   useEffect(() => {
     assetIds && idsSearch();
     linkToSearchResult && elasticSearch();
-  }, []);  
+  }, []);
 
   const buttonProps = {
     downloadButton,
@@ -145,8 +131,8 @@ function MpCustomSearch ({
     paddingRight: titlePaddingRight || null,
     paddingBottom: titlePaddingBottom || null,
     paddingLeft: titlePaddingLeft || null
-  }  
-  
+  }
+
   return (
 
     <div className='mpSearchComponent' id={navigationId && navigationId}>
@@ -157,7 +143,7 @@ function MpCustomSearch ({
       }
       {products && products.length > 0 ? (
           <div className={`mpSearchContainer ${defaultView || "grid"}`} style={{ gridTemplateColumns: `repeat(${perRow ? perRow : 5}, 1fr)` }}>
-            {products.map(c => 
+            {products.map(c =>
               <Card
                 fields={c.fields}
                 key={c.fields.id.value}
@@ -168,7 +154,7 @@ function MpCustomSearch ({
         ) : (
           <div className='mpSearchContainer'>No Results</div>
       )}
-    </div>    
+    </div>
   );
 }
 

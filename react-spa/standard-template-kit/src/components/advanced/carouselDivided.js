@@ -21,9 +21,9 @@ function CarouselDivided ({
   arrowColor,
   arrowFontSize,
   arrowIndent,
-  indicatorType,  
+  indicatorType,
   indicatorFontSize,
-  indicatorIndent,  
+  indicatorIndent,
   indicatorColor,
   indicatorActiveColor,
   indicatorGap,
@@ -37,7 +37,7 @@ function CarouselDivided ({
 
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;    
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
 
   const [configProps, setConfigProps] = useState();
 
@@ -50,7 +50,7 @@ function CarouselDivided ({
           result = data[0];
         } else if (noStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setConfigProps(result);
       });
   }, [styleName, noStyles, apiBase, restPath, nodeName]);
@@ -101,8 +101,7 @@ function CarouselDivided ({
   let urlLeftImage = leftImage ? leftImage['@link'] : require('../../images/placeholderImage.jpg');
 
   const rightImage = activeRightImages[currentIndex];
-  let urlRightImage = rightImage ? rightImage['@link'] : require('../../images/placeholderImage.jpg'); 
-
+  let urlRightImage = rightImage ? rightImage['@link'] : require('../../images/placeholderImage.jpg');
 
   const carouselStyles = {
     position: "relative",
@@ -119,15 +118,15 @@ function CarouselDivided ({
     left: arrowIndent || configProps?.arrowIndent || null
   }
 
-  const rightArrowStyles = { 
+  const rightArrowStyles = {
     color: arrowColor || configProps?.arrowColor || null,
     fontSize: arrowFontSize || configProps?.arrowFontSize || null,
     right: arrowIndent || configProps?.arrowIndent || null
   }
-  
+
   const carouselDividedImagesStyles = {
     maxHeight: carouselHeight || configProps?.carouselHeight || null
-  };  
+  };
 
   const carouselImageStyles = {
     borderColor: carouselBorderColor || configProps?.carouselBorderColor || null,
@@ -135,7 +134,7 @@ function CarouselDivided ({
     borderStyle: carouselBorderStyle || configProps?.carouselBorderStyle || null,
     borderRadius: carouselBorderRadius || configProps?.carouselBorderRadius || null,
     maxHeight: carouselHeight || configProps?.carouselHeight || null
-  };  
+  };
 
   const indicatorStyles = {
     fontSize: indicatorFontSize || configProps?.indicatorFontSize || null,
@@ -163,7 +162,7 @@ function CarouselDivided ({
     borderRadius: (indicatorType || configProps?.indicatorType) === "dot" ? "inherit" : null,
     backgroundColor: indicatorColor || configProps?.indicatorColor || null,
   }
-  
+
   const activeIconStyles = {
     ...iconStyles,
     backgroundColor: indicatorActiveColor || configProps?.indicatorActiveColor || null,
@@ -172,14 +171,14 @@ function CarouselDivided ({
   return (
     <div className='carouselDividedWrapper'>
       <div className='carouselComponent' style={{ justifyContent: carouselPosition || configProps?.carouselPosition || "left" }}>
-        <div className={`carousel carouselArea`} style={carouselStyles}> 
+        <div className={`carousel carouselArea`} style={carouselStyles}>
           {(arrowType || configProps?.arrowType) !== "unset" ?
             <div>
               <div onClick={goToPrevious} className="leftArrowStyles" style={leftArrowStyles}>
                 {(arrowType || configProps?.arrowType) === "arrow" ? <BsArrowLeftShort /> : <BsChevronLeft/>}
               </div>
               <div onClick={goToNext} className="rightArrowStyles"  style={rightArrowStyles}>
-                {(arrowType || configProps?.arrowType) === "arrow" ? <BsArrowRightShort /> : <BsChevronRight/>}  
+                {(arrowType || configProps?.arrowType) === "arrow" ? <BsArrowRightShort /> : <BsChevronRight/>}
               </div>
             </div>
           : null}
@@ -195,7 +194,7 @@ function CarouselDivided ({
                   style={activeIndicatorIndex !== imageIndex ? indicatorStyles : activeIndicatorStyles}
                   key={imageIndex}
                   onClick={() => goToSlide(imageIndex)}
-                > 
+                >
                   {(indicatorType || configProps?.indicatorType) === "squares" ? <FaSquareFull style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/> : (indicatorType || configProps?.indicatorType) === "lines" ? <span className="lineIndicator"></span> : <FaCircle style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/>}
                 </div>
               ))}

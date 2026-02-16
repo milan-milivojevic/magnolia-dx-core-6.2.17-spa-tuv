@@ -32,7 +32,6 @@ import W2PDocumentsByStatus from "./components/w2p/w2pDocumentsByStatus";
 import W2PDocumentsSearch from "./components/search/w2pDocumentsSearch";
 import W2PSearch from "./components/search/w2pSearch";
 
-
 import PagesConfig from "./components/mainConfig/pagesConfig";
 import HeaderConfig from "./components/mainConfig/headerConfig";
 import TopNavConfig from "./components/mainConfig/topNavConfig";
@@ -119,7 +118,6 @@ import FooterSection from "./components/sections/footerSection";
 import InnerSection from "./components/sections/innerSection";
 import MainSection from "./components/sections/mainSection";
 
-
 const config = {
     'componentMappings':{
         "standard-template-kit:pages/config/main": MainPage,
@@ -155,7 +153,6 @@ const config = {
         "standard-template-kit:components/search/w2pDocumentsSearch": W2PDocumentsSearch,
         "standard-template-kit:components/search/w2pTemplatesSearch": W2PSearch,
 
-
         "standard-template-kit:components/mainConfig/pagesConfig": PagesConfig,
         "standard-template-kit:components/mainConfig/headerConfig": HeaderConfig,
         "standard-template-kit:components/mainConfig/topNavConfig": TopNavConfig,
@@ -173,8 +170,8 @@ const config = {
         "standard-template-kit:components/basic/config/spacerConfig": SpacerConfig,
         "standard-template-kit:components/basic/config/textConfig": TextConfig,
         "standard-template-kit:components/basic/config/videoConfig": VideoConfig,
-        "standard-template-kit:components/basic/config/youtubeConfig": YoutubeConfig,        
-        
+        "standard-template-kit:components/basic/config/youtubeConfig": YoutubeConfig,
+
         "standard-template-kit:components/advanced/config/accordionConfig": AccordionConfig,
         "standard-template-kit:components/advanced/config/borderTeaserConfig": BorderTeaserConfig,
         "standard-template-kit:components/advanced/config/cardTeaserConfig": CardTeaserConfig,
@@ -198,7 +195,7 @@ const config = {
         "standard-template-kit:components/grouping/config/linkListConfig": LinkListConfig,
         "standard-template-kit:components/grouping/config/tabsConfig": TabsConfig,
         "standard-template-kit:components/grouping/config/textLinkListConfig": TextLinkListConfig,
-        
+
         "standard-template-kit:components/advanced/accordion": Accordion,
         "standard-template-kit:components/grouping/accordionList": AccordionList,
         "standard-template-kit:components/basic/audio": Audio,
