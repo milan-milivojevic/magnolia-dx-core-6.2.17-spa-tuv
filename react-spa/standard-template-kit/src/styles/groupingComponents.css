@@ -1,4 +1,3 @@
-/* Accordion List Component */
 
 .accordionList {
   display: flex;
@@ -6,7 +5,7 @@
 }
 .accordionItemWrapper {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 100%;
@@ -19,13 +18,7 @@
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  /* padding: 12px 24px 12px 12px;
-  border-top: 1px solid rgb(18, 74, 126);
-  font-size: 23px;
-  line-height: 30px;
-  color: rgb(18, 74, 126);
-  background-color: rgb(255, 255, 255);
-  font-weight: bold; */
+
 }
 .accordion .item .content.show {
   display: block;
@@ -33,8 +26,6 @@
 .accordion .item .content.hide {
   display: none;
 }
-
-/* Tabs Group Component */
 
 .tabsGroup {
   max-width: 100%;
@@ -46,15 +37,8 @@
 }
 .tabTitles .tab {
   flex: 1 1 0;
-  /* border: none !important; */
-  /* width: 200px; */
-}
 
-/* .tabTitles .tab.activeTab {
-  border-width: 0 0 4px 0 !important;
-  border-bottom: 4px solid #123250 !important;
-  margin: -4px;
-} */
+}
 
 .tabContent {
   display: none;
@@ -62,8 +46,6 @@
 .tabContent.tabActiveContent {
   display: block;
 }
-
-/* Image Gallery Component */
 
 .imageGalleryComponent {
   display: grid;
@@ -100,7 +82,7 @@
 .imageGalleryComponent.layout32 {
   grid-template-columns: 0.25fr 0.5fr 0.25fr;
 }
-.imageGalleryComponent.layout33 { 
+.imageGalleryComponent.layout33 {
   grid-template-columns: 0.25fr 0.25fr 0.5fr;
 }
 
@@ -127,13 +109,11 @@
   grid-column: 1 / 3;
 }
 
-/* List Components */
-
 .listComponents {
   display: grid;
   gap: inherit;
 }
-/* v-webkit is class from body tag only in edit mode */
+
 .editMode .listComponents :first-child,
 .editMode .listComponents :last-child {
   grid-column: 1 / -1;
@@ -156,7 +136,7 @@
   grid-template-columns: 0.33fr 0.67fr;
 }
 .listComponents.layout24 {
-  grid-template-columns: 0.67fr 0.33fr; 
+  grid-template-columns: 0.67fr 0.33fr;
 }
 
 .listComponents.layout3 {
@@ -168,7 +148,7 @@
 .listComponents.layout32 {
   grid-template-columns: 0.25fr 0.5fr 0.25fr;
 }
-.listComponents.layout33 { 
+.listComponents.layout33 {
   grid-template-columns: 0.25fr 0.25fr 0.5fr;
 }
 
@@ -183,5 +163,3 @@
 .listComponents.layout6 {
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
-
-

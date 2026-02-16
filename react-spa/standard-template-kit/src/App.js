@@ -11,15 +11,13 @@ import LeftNavStyles from './styles/leftNavigation';
 import './App.css';
 import { GrUserAdmin, GrUserSettings, GrSearch, GrLogout, GrLanguage, GrFormDown, GrFormUp } from "react-icons/gr";
 import {
-  isPublicInstance,
-  getAPIBase,
+    getAPIBase,
   getLanguages,
   getCurrentLanguage,
   changeLanguage,
-  getRouterBasename, 
+  getRouterBasename,
   events
 } from "./helpers/AppHelpers";
-import { useScrollTrigger } from '@mui/material';
 
 const ForwardedTopNav = React.forwardRef(Navigation);
 
@@ -42,7 +40,7 @@ function App() {
           const removeLanguagePrefix = (pathname) => {
             const parts = pathname.split('/');
             if (parts.length > 1 && supportedLanguages.includes(parts[2])) {
-              parts.splice(2, 1); 
+              parts.splice(2, 1);
               return parts.join('/') || '/';
             }
             return pathname;
@@ -60,8 +58,6 @@ function App() {
 
             const elementId = href.startsWith('#') ? href.substring(1) : url.hash.substring(1);
             const element = document.getElementById(elementId);
-            console.log("element");
-            console.log(element);
             const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
             const offset = 190;
             const scrollToPosition = elementPosition - offset;
@@ -69,7 +65,7 @@ function App() {
             window.scrollTo({
               top: scrollToPosition,
               behavior: 'smooth',
-            });            
+            });
           }
         }
       }
@@ -80,21 +76,20 @@ function App() {
     return () => {
       document.removeEventListener('click', handleLinkClick);
     };
-  }, []); 
-  
+  }, []);
+
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const isPagesApp = window.location.search.includes("mgnlPreview");
   const editMode = isPagesApp ? "editMode" : "";
-  
-  /* Rendering Languages */
+
   function renderLanguages() {
-    const currentLanguage = getCurrentLanguage();    
+    const currentLanguage = getCurrentLanguage();
     const languages = getLanguages();
     return (
       <div className="languagesContainer">
         <GrLanguage/>
-        <div 
-          className="currentLanguage" 
+        <div
+          className="currentLanguage"
           onClick={() => setLangDropdownOpen(prev => !prev)}
         >
           <span>{currentLanguage}</span>
@@ -120,31 +115,17 @@ function App() {
     );
   }
 
-  const [query, setQuery] = useState("");  
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [query, setQuery] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  /* Setting top position and min-height of Page Content */
-  const headerRef = React.useRef(null);  
-  const topNavRef = React.useRef(null); 
+  const headerRef = React.useRef(null);
+  const topNavRef = React.useRef(null);
   const pageRef = React.useRef(null);
-  
-  // React.useEffect(() => {
-  //   var interval = setInterval(() => {    
-  //     const headerHeight = headerRef.current.getBoundingClientRect().height;
-  //     const topNavHeight = topNavRef.current.getBoundingClientRect().height;
-  //     const topHeight = headerHeight + topNavHeight;
-  //     topNavRef.current.style.top = headerHeight + 'px';
-  //     pageRef.current.style.top = topHeight + 'px';
-  //     pageRef.current.style.minHeight = `calc(100vh - ${topHeight}px)`;
-  //   }, 300)
-  //   setTimeout(function( ) { clearInterval( interval ); }, 6000);
-  // }, []);
 
-  /* Getting props from headerConfig for setting logo and logo link */
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;  
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
 
   const [configProps, setConfigProps] = useState();
   const [userData, setUserData] = useState();
@@ -176,13 +157,12 @@ function App() {
       });
   }, []);
 
-  /* Setting pathname */
   const [pathname, setPathname] = useState(window.location.pathname);
 
   useEffect(() => {
     function handlePopstate() {
       setPathname(window.location.pathname);
-    }   
+    }
 
     events.on('popstate', handlePopstate);
     window.addEventListener('popstate', handlePopstate);
@@ -196,7 +176,6 @@ function App() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (document.querySelector('.globalSearch')) {
-        console.log("aaaaa");
         const footer = document.querySelector('footer');
         if (footer) {
           footer.style.width='100% !important';
@@ -204,33 +183,18 @@ function App() {
         }
       }
     }, 500);
-  
-    // Prekida interval nakon 2 sekunde (2000 ms)
+
     const timeout = setTimeout(() => {
       clearInterval(interval);
     }, 2000);
-  
+
     return () => {
       clearInterval(interval);
       clearTimeout(timeout);
     };
   }, []);
 
-  // ???????????????????????????????
-  // useEffect(() => {
-  //   if (window.location.href.includes('/Search-Pages') && editMode !== "editMode") {
-  //     const newurl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-  //     window.history.pushState({path:newurl}, '', newurl);
-  //   }
-  // }, []);
-
-  /* Questionable part of the code because of querySelector */
   var leftNavInterval = setInterval(() => {
-
-    /* Adding active class on active nav item elemets */
-    // const links = document.querySelectorAll('.menu-item > button > a');
-    // const topNavLinks = document.querySelectorAll('.topNav .menu-item > button > a');
-    // const topLinks = document.querySelectorAll('.topNav .level-1.menu-item > button > a');
 
     const leftLinks = document.querySelectorAll('.leftHandNav .menu-item > button > a');
 
@@ -256,7 +220,7 @@ function App() {
     });
     if (leftLink) {
       setActiveLHNLink(leftLink);
-    } 
+    }
 
     const topLinks = document.querySelectorAll('.topNav .menu-item > button > a');
 
@@ -279,64 +243,8 @@ function App() {
     });
     if (topLink) {
       setActiveTopLink(topLink);
-    } 
+    }
 
-
-    // function setActiveLink(link) {
-    //   links.forEach((link) => {
-    //     link.classList.remove('active');
-    //   });
-    //   leftLinks.forEach((leftLink) => {
-    //     leftLink.parentNode.parentNode.parentNode.parentNode.classList.remove('active');
-    //   });
-    //   link.classList.add('active');
-    //   link.parentNode.parentNode.parentNode.parentNode.classList.add('active');
-    //   link.parentNode.parentNode.classList.add('active');
-    // }
-
-    // function setActiveTopLink(link) {
-    //   topNavLinks.forEach((link) => {
-    //     link.classList.remove('active');
-    //   });
-    //   topLinks.forEach((topLink) => {
-    //     topLink.parentNode.parentNode.parentNode.parentNode.classList.remove('active');
-    //   });
-    //   link.classList.add('active');
-    //   link.parentNode.parentNode.parentNode.parentNode.classList.add('active');  
-    // }
-
-    // const link = Array.from(links).find(link => link.href === window.location.href);
-    // if (link) {
-    //   setActiveLink(link);
-    // }
-    // const topNavLink = Array.from(topNavLinks).find(link => link.href === window.location.href);
-    // if (topNavLink) {
-    //   setActiveLink(topNavLink);
-    // }
-    
-    // const topLink = Array.from(topLinks).find(link => link.href === window.location.href);
-    // if (topLink) {
-    //   setActiveTopLink(topLink);
-    // }
-
-    // /* Setting all chevrons in the same place */
-    // const navItems = document.querySelectorAll('.leftHandNav ul li a');
-    // // console.log(navItems);
-    // let longestNavItemWidth = 0;
-    // // console.log(longestNavItemWidth);
-    // navItems.forEach(navItem => {
-    //   const navItemWidth = navItem.getBoundingClientRect().width;
-    //   // console.log(navItemWidth);
-    //   if (navItemWidth > longestNavItemWidth) {
-    //     longestNavItemWidth = navItemWidth;
-    //   }
-    // });
-    // // console.log(longestNavItemWidth);
-    // navItems.forEach(navItem => {
-    //   navItem.style.width = longestNavItemWidth + 'px';
-    // });
-
-      /* Navigation BuxFix Firefox */
       var uls = document.querySelectorAll('.leftHandNav ul');
       for (var i = 0; i < uls.length; i++) {
         if (uls[i].querySelector('a.active')) {
@@ -346,7 +254,6 @@ function App() {
 
   }, 300);
   setTimeout(function( ) { clearInterval( leftNavInterval ); }, 6000);
-
 
   const handleClick = () => {
 
@@ -389,25 +296,17 @@ function App() {
       loaderElement.remove();
     }
   }, 1000);
-  // if (!isUserLogged) {
-  //   return (
-  //     <div className='loginErrorMessage'>
-  //       <p>Dear user, you did not follow the correct login procedure, so please go to the login page first. Click on the link below:</p>
-  //       <p>Sehr geehrter Nutzer, Sie sind noch nicht angemeldet. Bitte gehen Sie zuerst auf die Login-Seite über untenstehenden Link:</p>
-  //       <a href="https://tuv-test.brandmaker.com/" target="_blank" rel="noopener noreferrer">https://tuv-test.brandmaker.com/</a>
-  //     </div>
-  //   );
-  // } else {
+
     return (
       <div className={`App ${editMode}`}>
-        <PagesStyles/>   
+        <PagesStyles/>
         <HeaderStyles/>
         <NavLevelsStyles/>
         <TopNavStyles/>
         <LeftNavStyles/>
         <HeadlinesStyles/>
         <ParagraphsStyles/>
-        <header ref={headerRef}>    
+        <header ref={headerRef}>
           <div className='header'>
             <div className='logo'>
               <a href={(getRouterBasename() + configProps?.logoPageLink).replace("//", "/").replace("Home/Home", "Home")}
@@ -415,10 +314,10 @@ function App() {
                   e.preventDefault();
                   window.history.pushState({}, "", e.currentTarget.href);
                   events.emit("popstate");
-                }}            
+                }}
               >
                 <img alt="" src={require('./images/home/Logo.png') }/>
-              </a>    
+              </a>
             </div>
             <div className='rightHeader'>
               {renderLanguages()}
@@ -435,10 +334,10 @@ function App() {
                 )}
               </div>
               <div className='flex headerSearch'>
-                <input 
+                <input
                   type='text'
                   className='searchInput'
-                  placeholder='Suche...' 
+                  placeholder='Suche...'
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={(e) => {
@@ -457,16 +356,16 @@ function App() {
                     {errorMessage}
                   </div>
                 )}
-              </div>              
+              </div>
               { showLogout === "false" || false ? null :
                 <div className='logout'>
                   <div><a href='https://tuv-test.brandmaker.com/Logout.do'><GrLogout/></a></div>
                 </div>
-              }         
+              }
             </div>
-          </div>             
-        </header>          
-        {/* <ForwardedTopNav ref={topNavRef}></ForwardedTopNav>     */}
+          </div>
+        </header>
+        {}
         <div className='pageContainer' ref={pageRef}>
           <PageLoader pathname={pathname} />
           {editMode !== "editMode" && (
@@ -478,7 +377,7 @@ function App() {
                   <br/>Wir helfen Dir gerne!
                 </div>
                 <a className='link' href='#'>Kontaktiere uns</a>
-              </div>    
+              </div>
               <div className='footerDown'>
                 <div className='footerLeft'>© TÜV Rheinland 2025</div>
                 <div className='footerRight'>
@@ -494,6 +393,5 @@ function App() {
       </div>
     );
   }
-// }
 
 export default App;

@@ -1,18 +1,10 @@
-/* .pageContainer {
-    top: 167px;
-    min-height: calc(100vh - 167px);
-} */
-/* header {
-    height: 112px;
-} */
 
 .staticSearch .headerSearch input.searchInput {
     width: 250px;
   }
 
-
 .staticSearch {
-    /* align-items: center; */
+
     padding: 160px 40px;
 }
 
@@ -21,7 +13,7 @@
     color: white;
     padding: 2px;
 }
-  
+
 .staticSearch .list {
     padding: 20px;
     font-size: 20px;
@@ -33,10 +25,10 @@
 .staticSearch .page a {
     text-decoration: none;
     color: #1B3380;
-    font-size: 24px;  
+    font-size: 24px;
     line-height: 24px;
     display: flex;
-    gap: 15px;  
+    gap: 15px;
 }
 .staticSearch .page a svg {
     width: 24px;
@@ -49,38 +41,13 @@
     padding: 0 10px;
 }
 
-/* .topNav {
-    height: 55px;
-    top: 112px;
-} */
-/* .leftHandNav {
-    min-height: calc(100vh - 311px);
-} */
 .leftHandNav > .menus {
   height: fit-content;
 }
 
 .leftHandNav li button a {
-    /* width: 242px; */
+
 }
-
-/* Privremeno resenje za LHN internal lvl2 navigation */
-
-/* li.level-1.active > button > a {
-    color: #1B3380;
-}
-li.level-2.active > button > a {
-    color: #fff;
-}
-li.level-2.active > button > a:hover {
-    color: #1B3380;
-} */
-
-/* .rightMainContent {
-    min-height: calc(100vh - 311px);
-} */
-
-
 
 .logoSticky {
   position: sticky;
@@ -92,18 +59,11 @@ li.level-2.active > button > a:hover {
   position: unset;
 }
 
-/* p strong {
-    font-family: "Sohne Halbfett";
-} */
-
-
-/* Corporate Icons */
-
 .corporateIcons .divider {
     border-bottom: 5px solid rgb(154, 154, 156);
 }
 .corporateIcons .title {
-    /* font-family: "Sohne Halbfett"; */
+
     font-size: 22px;
     line-height: 33px;
     color: rgb(65, 65, 65);
@@ -112,10 +72,10 @@ li.level-2.active > button > a:hover {
 }
 
 .corporateIcons .subtitle {
-    /* font-family: "Sohne Buch"; */
+
     font-size: 22px;
     line-height: 33px;
-    color: rgb(65, 65, 65);    
+    color: rgb(65, 65, 65);
     padding-bottom: 40px;
     font-weight: normal;
 }

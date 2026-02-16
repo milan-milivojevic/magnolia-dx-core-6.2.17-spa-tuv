@@ -10,11 +10,10 @@ function RedirectPage ({
 
   const href1 = "https://dg.brandmaker.com/cmsPublic";
   const href2 = "https://dg.brandmaker.com/cmsPublic/Home";
-  
+
   window.history.pushState({}, "", href1);
   window.history.pushState({}, "", href2);
   events.emit("popstate");
-
 
   return (
     <>

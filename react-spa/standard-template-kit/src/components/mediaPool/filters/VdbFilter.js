@@ -11,9 +11,8 @@ export default function VdbFilter({onUpdateSelectedVdbs, selectedVdbs}) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [tempParents, setTempParents] = useState([]);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
-  /* Dohvatanje Filtera */
   useEffect(() => {
     fetch(`${baseUrl}/rest/mp/v1.1/virtual-databases`)
       .then((response) => response.json())
@@ -23,7 +22,6 @@ export default function VdbFilter({onUpdateSelectedVdbs, selectedVdbs}) {
         setInitialParents(transformedParents);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedVdbs]);
 
@@ -35,7 +33,7 @@ export default function VdbFilter({onUpdateSelectedVdbs, selectedVdbs}) {
         value: item.id.toString(),
         isChecked: selectedVdbs?.includes(item.id.toString())
       };
-  
+
       return mappedItem;
     });
   };
@@ -51,7 +49,7 @@ export default function VdbFilter({onUpdateSelectedVdbs, selectedVdbs}) {
   const toggleParentCheckbox = (parentId) => {
     setParents((prevState) => {
       return prevState.map((parent) => {
-        if (parent.id === parentId) {          
+        if (parent.id === parentId) {
           parent.isChecked = !parent.isChecked;
         }
         return parent;
@@ -61,26 +59,23 @@ export default function VdbFilter({onUpdateSelectedVdbs, selectedVdbs}) {
 
   const applySelection = () => {
     const values = [];
-    
-    parents.forEach(parent => {      
-      if (parent.isChecked) { // Ako nisu svi childovi selektovani, dodajemo vrednosti childova pojedinačno
+
+    parents.forEach(parent => {
+      if (parent.isChecked) {
         values.push(parent.value);
       }
     });
-  
+
     onUpdateSelectedVdbs(values);
     setIsFilterOpen(false);
   };
 
-  /* Restartovanje stanja svih Checkboxova */
-
   const clearAll = () => {
-    setParents(initialParents.map(parent => {     
+    setParents(initialParents.map(parent => {
       parent.isChecked = false;
       return parent;
     }));
   };
-
 
   const cancel = () => {
     const resetParents = parents.map((parent, index) => {
@@ -126,7 +121,7 @@ export default function VdbFilter({onUpdateSelectedVdbs, selectedVdbs}) {
               </div>
             ))}
           </div>
-          <div className="filterActionButtons">            
+          <div className="filterActionButtons">
             <button className="clearButton" onClick={clearAll}>Clear All</button>
             <div>
               <button className="cancelButton" onClick={cancel}>Cancel</button>

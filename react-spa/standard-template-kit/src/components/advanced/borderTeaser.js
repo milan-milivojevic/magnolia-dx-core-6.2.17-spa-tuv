@@ -1,12 +1,11 @@
 import { React, useState, useEffect } from 'react';
 import { BsArrowRight, BsChevronRight } from "react-icons/bs";
-import { TfiDownload } from "react-icons/tfi";
 import { GrDownload } from "react-icons/gr";
 import { getAPIBase, getRouterBasename } from '../../helpers/AppHelpers';
 import styled from 'styled-components';
-import { ReactComponent as ArrowsIcon } from '../../images/home/ArrowsIcon.svg';
-import { ReactComponent as DownloadIcon } from '../../images/home/DownloadIcon.svg';
+
 import LinkModal from '../../helpers/LinkModal';
+import { ReactComponent as ArrowsIcon } from '../../images/home/ArrowsIcon.svg';
 
 const Wrapper = styled.div`
   .borderTeaser:hover {
@@ -18,10 +17,10 @@ const Wrapper = styled.div`
     color: ${(props) => props.hovLabelColor && props.hovLabelColor + "!important"};
     border-color: ${(props) => props.hovBorderColor && props.hovBorderColor + "!important"};
   }
-  .link svg { 
+  .link svg {
     color: ${(props) => props.defChevronColor && props.defChevronColor + "!important"};
   }
-  .link:hover svg { 
+  .link:hover svg {
     color: ${(props) => props.hovChevronColor && props.hovChevronColor + "!important"};
   }
   .description {
@@ -30,7 +29,7 @@ const Wrapper = styled.div`
 `;
 
 function BorderTeaser ({
-  headline,   
+  headline,
   headlineLevel,
   headlineFontFamily,
   headlinePosition,
@@ -108,7 +107,7 @@ function BorderTeaser ({
   componentBorderRadius,
   componentWidth,
   componentHeight,
-  componentPosition,    
+  componentPosition,
   teaserLayout,
   descLinkLayout,
   descRowLayoutWidth,
@@ -124,11 +123,10 @@ function BorderTeaser ({
   noStyles,
 }) {
 
-    
   const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;    
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
 
   const [showLinkModal, setShowLinkModal] = useState(false);
   const [configProps, setConfigProps] = useState();
@@ -142,11 +140,11 @@ function BorderTeaser ({
           result = data[0];
         } else if (noStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setConfigProps(result);
       });
   }, [styleName, noStyles, apiBase, restPath, nodeName]);
-  
+
   const [linkConfigProps, setLinkConfigProps] = useState();
 
   useEffect(() => {
@@ -159,7 +157,7 @@ function BorderTeaser ({
           result = data[0];
         } else if (linkNoStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setLinkConfigProps(result);
       });
   }, [linkStyleName, linkNoStyles, configProps?.linkStyleName, , configProps?.linkNoStyles, apiBase, restPath, nodeName]);
@@ -182,8 +180,8 @@ function BorderTeaser ({
     }
   };
 
-  const HeadlineLevel = headlineLevel || configProps?.headlineLevel || "h1";  
-  const downloadLink = download ? download['@link'] : baseUrl;  
+  const HeadlineLevel = headlineLevel || configProps?.headlineLevel || "h1";
+  const downloadLink = download ? download['@link'] : baseUrl;
   const href = linkType === "page" ? (getRouterBasename() + page).replace("//", "/").replace("Home/Home", "Home") : linkType === "external" ? external : downloadLink;
 
   const cursorPointer = clickableComponent === "true" ? "cursorPointer" : configProps?.clickableComponent === "true" ? "cursorPointer" : null;
@@ -198,7 +196,7 @@ function BorderTeaser ({
   const hovLinkBgColor = linkHoverBackColor || configProps?.linkHoverBackColor ||  linkConfigProps?.linkHoverBackColor || defLinkBgColor;
 
   const defLabelColor = labelDefaultColor || configProps?.labelDefaultColor || linkConfigProps?.labelDefaultColor || null;
-  const hovLabelColor = labelHoverColor || configProps?.labelHoverColor || linkConfigProps?.labelHoverColor || defLabelColor; 
+  const hovLabelColor = labelHoverColor || configProps?.labelHoverColor || linkConfigProps?.labelHoverColor || defLabelColor;
 
   const defChevronColor = chevronDefaultColor || configProps?.chevronDefaultColor || linkConfigProps?.chevronDefaultColor || null;
   const hovChevronColor = chevronHoverColor || configProps?.chevronHoverColor || linkConfigProps?.chevronHoverColor || defChevronColor;
@@ -250,7 +248,6 @@ function BorderTeaser ({
         : { justifyContent: descLinkPosition || configProps?.descLinkPosition || null }
     )
   };
-  
 
   const descriptionStyles = {
     width: descRowLayoutWidth || configProps?.descRowLayoutWidth || null,
@@ -270,9 +267,9 @@ function BorderTeaser ({
     paddingTop: linkPaddingTop || configProps?.linkPaddingTop || linkConfigProps?.linkPaddingTop || null,
     paddingRight: linkPaddingRight || configProps?.linkPaddingRight || linkConfigProps?.linkPaddingRight || null,
     paddingBottom: linkPaddingBottom || configProps?.linkPaddingBottom || linkConfigProps?.linkPaddingBottom || null,
-    paddingLeft: linkPaddingLeft || configProps?.linkPaddingLeft || linkConfigProps?.linkPaddingLeft || null,  
+    paddingLeft: linkPaddingLeft || configProps?.linkPaddingLeft || linkConfigProps?.linkPaddingLeft || null,
     justifyContent: linkHorizontalPosition || configProps?.linkHorizontalPosition || "flex-start",
-    alignItems: linkVerticalPosition || configProps?.linkVerticalPosition || "flex-start"                  
+    alignItems: linkVerticalPosition || configProps?.linkVerticalPosition || "flex-start"
   }
 
   const linkStyles = {
@@ -281,7 +278,7 @@ function BorderTeaser ({
     paddingTop: labelPaddingTop || configProps?.labelPaddingTop || linkConfigProps?.labelPaddingTop || null,
     paddingRight: labelPaddingRight || configProps?.labelPaddingRight || linkConfigProps?.labelPaddingRight || null,
     paddingBottom: labelPaddingBottom || configProps?.labelPaddingBottom || linkConfigProps?.labelPaddingBottom || null,
-    paddingLeft: labelPaddingLeft || configProps?.labelPaddingLeft || linkConfigProps?.labelPaddingLeft || null, 
+    paddingLeft: labelPaddingLeft || configProps?.labelPaddingLeft || linkConfigProps?.labelPaddingLeft || null,
     borderColor: linkBorderColor || configProps?.linkBorderColor || linkConfigProps?.linkBorderColor || null,
     borderWidth: linkBorderWidth || configProps?.linkBorderWidth || linkConfigProps?.linkBorderWidth || null,
     borderStyle: linkBorderStyle || configProps?.linkBorderStyle || linkConfigProps?.linkBorderStyle || null,
@@ -301,7 +298,7 @@ function BorderTeaser ({
   const addArrowsVar = addArrows || configProps?.addArrows || "false";
   const arrowsHeightVar = {height: arrowsHeight || configProps?.arrowsHeight || null};
 
-  return (    
+  return (
     <Wrapper className='borderTeaserWrapper'
       hovBgColor={hovBgColor}
       hovBorderColor={hovBorderColor}
@@ -313,17 +310,17 @@ function BorderTeaser ({
       descColor={descriptionColor || configProps?.descriptionColor || null}
     >
       <div className={`borderTeaserComponent flex`} style={{ justifyContent: componentPosition || configProps?.componentPosition || null }}>
-        <div className={`borderTeaser flexColumn ${cursorPointer}`} 
+        <div className={`borderTeaser flexColumn ${cursorPointer}`}
              onClick={clickableComponent === "true" ? openLink : configProps?.clickableComponent === "true" ? openLink : null}
              style={borderTeaserStyles}
-        > 
+        >
           {headline &&
             <HeadlineLevel className="headline" style={headlineStyles}>
               <span className='customHeadlineArrows' style={arrowsHeightVar}>
                 {(addArrowsVar !== "false" || false) && <ArrowsIcon/>}
               </span>{headline || null}
             </HeadlineLevel>
-          }   
+          }
           <div className='descriptionLinkWrapper flex' style={descriptionLinkWrapperStyles}>
             { description &&
               <div className={`description ${descriptionStyle || configProps?.descriptionStyle || null}`}
@@ -341,8 +338,8 @@ function BorderTeaser ({
             }
             {(linkIcons || linkLabel) && (linkDestination === "iFrame") &&
               <div className='linkComponent' style={linkComponentStyles} >
-                <a onClick={toggleLinkModal} className={`link ${linkIcon}`} style= {linkStyles}> 
-                  {linkLabel ? linkLabel : ""} 
+                <a onClick={toggleLinkModal} className={`link ${linkIcon}`} style= {linkStyles}>
+                  {linkLabel ? linkLabel : ""}
                   {linkIcons === "BsChevronRight" ? <BsChevronRight /> : linkIcons === "BsArrowRight" ? <BsArrowRight /> : linkIcons === "TfiDownload" ? <GrDownload /> : ""}
                 </a>
               </div>

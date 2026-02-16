@@ -1,10 +1,10 @@
 import payload from './mpPayload.json'
 import payloadSingleAsset from './mpSingleAssetPayload.json'
 
-const BASE_URL = process.env.REACT_APP_MGNL_HOST_NEW; 
+const BASE_URL = process.env.REACT_APP_MGNL_HOST_NEW;
 
 const apiServiceHandler = async (url, options) => {
-  try {    
+  try {
     const response = await fetch(url, options);
 
     if (!response.ok) {
@@ -16,14 +16,13 @@ const apiServiceHandler = async (url, options) => {
     return data;
 
   } catch (error) {
-    console.error(error);
   }
 }
 
 export const getApiBearerToken = () => apiServiceHandler(`${BASE_URL}/rest/sso/auth/jaas/jwt`);
 
 const paylodID = (assetId) => {
-  
+
   const payloadCopy = { ...payloadSingleAsset };
 
   payloadCopy.criteria.subs[0].value = '"' + assetId + '"'
@@ -48,17 +47,16 @@ export const idSearch = async (assetId) => {
   })
 
   const data = await response;
-  
+
   const matchingItem = data.items.find(item => item.fields.id.value.toString() === assetId);
-  
+
   return matchingItem;
 }
-
 
 export const downloadFileDirect = async (id, selectedOption, download_version, language, licenseId) => {
 
   const token = await getApiBearerToken();
-  
+
   const response = apiServiceHandler(`${BASE_URL}/rest/mp/v1.0/assets/downloadLinks/direct`, {
     method: 'POST',
     headers: {
@@ -82,7 +80,6 @@ export const downloadFileDirect = async (id, selectedOption, download_version, l
   return data;
 };
 
-
 const updateCustomSearchPayload = (requestPayload, sortingType, isAsc, offset, limit) => {
 
   const updatedPayload = requestPayload;
@@ -90,7 +87,7 @@ const updateCustomSearchPayload = (requestPayload, sortingType, isAsc, offset, l
   if (sortingType !== null) {
     const sortingObject = sortingType === 'relevance' ? [{ "@type": sortingType, "asc": isAsc }] : [{ "@type": "field", "field": sortingType, "asc": isAsc }];
     updatedPayload.output.sorting = sortingObject;
-  }    
+  }
 
   const pagingObject = { "@type": "offset", "offset": offset, "limit": limit };
   requestPayload.output.paging = pagingObject;
@@ -118,7 +115,6 @@ export const customSearch = async (requestPayload, sortingType, isAsc, offset, l
   return data;
 }
 
-
 const updateSearchPayload = (sortingType, isAsc, offset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs) => {
 
   const sortingObject = sortingType === 'relevance' ? [{ "@type": sortingType, "asc": isAsc }] : [{ "@type": "field", "field": sortingType, "asc": isAsc }];
@@ -133,7 +129,7 @@ const updateSearchPayload = (sortingType, isAsc, offset, limit, query, selectedC
   const categoriesIndex = updatedPayload.criteria.subs.findIndex(
     sub => sub["@type"] === "in" && sub.fields && sub.fields.includes("themes.id")
   );
-  
+
   if (selectedCategories && selectedCategories.length > 0) {
       const newObject = {
         "@type": "in",
@@ -141,14 +137,14 @@ const updateSearchPayload = (sortingType, isAsc, offset, limit, query, selectedC
         "long_value": selectedCategories,
         "any": true
       };
-  
+
       if (categoriesIndex > -1) {
-        updatedPayload.criteria.subs[categoriesIndex] = newObject; 
+        updatedPayload.criteria.subs[categoriesIndex] = newObject;
       } else {
-        updatedPayload.criteria.subs.push(newObject); 
+        updatedPayload.criteria.subs.push(newObject);
       }
-  } else if (categoriesIndex > -1) { 
-      updatedPayload.criteria.subs.splice(categoriesIndex, 1); 
+  } else if (categoriesIndex > -1) {
+      updatedPayload.criteria.subs.splice(categoriesIndex, 1);
   }
 
   const suffixesIndex = updatedPayload.criteria.subs.findIndex(
@@ -189,31 +185,10 @@ const updateSearchPayload = (sortingType, isAsc, offset, limit, query, selectedC
       parentVdbsSub.subs[vdbsIndex] = newObject;
     } else {
       parentVdbsSub.subs.push(newObject);
-    }    
+    }
   } else if (vdbsIndex > -1) {
     parentVdbsSub.subs.splice(vdbsIndex, 1);
   }
-
-  // const keywordsIndex = updatedPayload.criteria.subs.findIndex(
-  //   sub => sub["@type"] === "in" && sub.fields && sub.fields.includes("structuredKeywords.id")
-  // );
-
-  // if (selectedKeywords && selectedKeywords.length > 0) {
-  //   const newObject = {
-  //     "@type": "in",
-  //     "fields": ["structuredKeywords.id"],
-  //     "long_value": selectedKeywords,
-  //     "any": true
-  //   };
-
-  //   if (keywordsIndex > -1) {
-  //     updatedPayload.criteria.subs[keywordsIndex] = newObject;
-  //   } else {
-  //     updatedPayload.criteria.subs.push(newObject);
-  //   }
-  // } else if (keywordsIndex > -1) { 
-  //   updatedPayload.criteria.subs.splice(keywordsIndex, 1);  
-  // }
 
   const tagsIndex = updatedPayload.criteria.subs.findIndex(
     sub => sub["@type"] === "in" && sub.fields && sub.fields.includes("keywords_multi")
@@ -232,15 +207,15 @@ const updateSearchPayload = (sortingType, isAsc, offset, limit, query, selectedC
     } else {
       updatedPayload.criteria.subs.push(newObject);
     }
-  } else if (tagsIndex > -1) { 
-    updatedPayload.criteria.subs.splice(tagsIndex, 1);  
+  } else if (tagsIndex > -1) {
+    updatedPayload.criteria.subs.splice(tagsIndex, 1);
   }
 
   return updatedPayload;
 }
 
 export const elasticSearchService = async (sortingType, isAsc, offset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs) => {
-  
+
   const updatedPayload = updateSearchPayload(sortingType, isAsc, offset, limit, query, selectedCategories, selectedSuffixes, selectedTags, selectedVdbs);
 
   const token = await getApiBearerToken();
@@ -275,12 +250,12 @@ export const querySearch = async (sortingType, isAsc, offset, limit, query, sele
   })
 
   const data = await response;
-  
+
   return data;
 }
 
 export const assetVersionsService = async (assetId) => {
-  
+
   const response = apiServiceHandler(`${BASE_URL}/rest/mp/v1.0/versions/assets/${assetId}`, {
     method: 'GET',
   })
@@ -291,7 +266,7 @@ export const assetVersionsService = async (assetId) => {
 };
 
 export const assetVariantsService = async (assetId) => {
-  
+
   const response = apiServiceHandler(`${BASE_URL}/rest/mp/v1.0/assets/masters/${assetId}/variants`, {
     method: 'GET',
   })
@@ -301,22 +276,19 @@ export const assetVariantsService = async (assetId) => {
   return assetVariants;
 };
 
-
 export const assetRelationsService = async (assetId) => {
   try {
     const relationsArray = await apiServiceHandler(`${BASE_URL}/rest/mp/v1.2/assets/${assetId}/relations`, {
       method: 'GET',
     });
-  
+
     const relationsArrayUniqueIds = relationsArray.relations
-      .map(item => item.relatedAssetId) // Prvo izvlačimo samo relatedAssetId
+      .map(item => item.relatedAssetId)
       .reduce((unique, item) => {
         return unique.includes(item) ? unique : [...unique, item];
-      }, []); // Onda koristimo reduce da uklonimo duplikate
-   
-  
-    const payloadArray = relationsArrayUniqueIds.map(assetId => ({ assetId }));
+      }, []);
 
+    const payloadArray = relationsArrayUniqueIds.map(assetId => ({ assetId }));
 
     const token = await getApiBearerToken();
 
@@ -334,17 +306,7 @@ export const assetRelationsService = async (assetId) => {
     return relatedAssets;
 
   } catch (error) {
-    // Handle error appropriately
-    console.error(error);
+
     return null;
   }
 };
-
-
-
-// export const getApiBearerToken = () => apiServiceHandler(`${BASE_URL}/rest/sso/auth/jaas/jwt`);
-// const token = await getApiBearerToken();
-// headers: {
-//   "Authorization": `Bearer ${token.access_token}`,
-//   "Content-Type": "application/json"
-// },

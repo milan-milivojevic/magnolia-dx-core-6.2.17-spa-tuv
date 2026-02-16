@@ -9,7 +9,7 @@ export default function TemplateStatusFilter({ onUpdateSelectedTemlateStatus, se
   const [parents, setParents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
   useEffect(() => {
     fetch(`${baseUrl}/wp/rest/search-filters/templates`)
@@ -23,7 +23,6 @@ export default function TemplateStatusFilter({ onUpdateSelectedTemlateStatus, se
         setSelectedOption(correspondingSelected || null);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedTemlateStatus]);
 
@@ -51,7 +50,7 @@ export default function TemplateStatusFilter({ onUpdateSelectedTemlateStatus, se
           value={selectedOption?.value || "all-active"}
           onChange={handleSelectChange}
           label="Template Status"
-        >          
+        >
           {parents.map(parent => (
             <MenuItem key={parent.id} value={parent.value}>{parent.label}</MenuItem>
           ))}

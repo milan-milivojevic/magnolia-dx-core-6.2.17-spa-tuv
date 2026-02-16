@@ -21,9 +21,9 @@ function Carousel ({
   arrowColor,
   arrowFontSize,
   arrowIndent,
-  indicatorType,  
+  indicatorType,
   indicatorFontSize,
-  indicatorIndent,  
+  indicatorIndent,
   indicatorColor,
   indicatorActiveColor,
   indicatorGap,
@@ -35,12 +35,11 @@ function Carousel ({
   noStyles
 }) {
 
-  const id = useId(); 
-  // const [isAutoSliding, setIsAutoSliding] = useState(true);
+  const id = useId();
 
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;    
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
 
   const [configProps, setConfigProps] = useState();
 
@@ -53,17 +52,16 @@ function Carousel ({
           result = data[0];
         } else if (noStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setConfigProps(result);
       });
   }, [styleName, noStyles, apiBase, restPath, nodeName]);
-  
 
   const images = [];
   for (let i = 0; i <= 20; i++) {
     images.push(multi[`multi${i}`]?.image || multi[`multi${i}`]?.video);
   }
-  
+
   const activeImages = images.filter((image) => {
     return image !== undefined;
   })
@@ -90,24 +88,12 @@ function Carousel ({
     setActiveIndicatorIndex(slideIndex);
   };
 
-
-  // Function to start auto-sliding
-  // const startAutoSlide = () => {
-  //   setIsAutoSliding(true);
-  // };
-
-  // Function to stop auto-sliding
-  // const stopAutoSlide = () => {
-  //   setIsAutoSliding(false);
-  // };
-
-  // Auto-slide effect
   useEffect(() => {
     let interval;
     if (carouselAutoplay === true || carouselAutoplay === "true") {
       interval = setInterval(() => {
         goToNext();
-      }, 3000); // 3000ms = 3 seconds
+      }, 3000);
     }
 
     return () => {
@@ -117,13 +103,10 @@ function Carousel ({
     };
   }, [carouselAutoplay, goToNext]);
 
-
-
   const imageBase = process.env.REACT_APP_MGNL_HOST_NEW;
   const image = activeImages[currentIndex];
   const mediaType = image?.metadata?.format?.includes('image');
   const url = image['@link'];
-  
 
   const carouselStyles = {
     position: "relative",
@@ -139,13 +122,12 @@ function Carousel ({
     fontSize: arrowFontSize || configProps?.arrowFontSize || null,
     left: arrowIndent || configProps?.arrowIndent || null
   }
-  
+
   const rightArrowStyles = {
     color: arrowColor || configProps?.arrowColor || null,
     fontSize: arrowFontSize || configProps?.arrowFontSize || null,
     right: arrowIndent || configProps?.arrowIndent || null
   }
-  
 
   const carouselImageStyles = {
     borderColor: carouselBorderColor || configProps?.carouselBorderColor || null,
@@ -181,7 +163,7 @@ function Carousel ({
     borderRadius: (indicatorType || configProps?.indicatorType) === "dot" ? "inherit" : null,
     backgroundColor: indicatorColor || configProps?.indicatorColor || null,
   }
-  
+
   const activeIconStyles = {
     ...iconStyles,
     backgroundColor: indicatorActiveColor || configProps?.indicatorActiveColor || null,
@@ -189,11 +171,10 @@ function Carousel ({
 
   return (
     <div className='carouselWrapper'
-      // onMouseEnter={stopAutoSlide}  // Pause on hover
-      // onMouseLeave={startAutoSlide} // Resume on mouse leave
+
     >
       <div className='carouselComponent' style={{ justifyContent: carouselPosition || configProps?.carouselPosition || "left" }}>
-        <div className={`carousel carouselArea`} style={carouselStyles}> 
+        <div className={`carousel carouselArea`} style={carouselStyles}>
           {(arrowType || configProps?.arrowType) !== "unset" ?
             <div>
               <div onClick={goToPrevious} className="leftArrowStyles" style={leftArrowStyles}>
@@ -204,12 +185,12 @@ function Carousel ({
               </div>
             </div>
           : null}
-          {mediaType && 
+          {mediaType &&
             <img className="carouselImage" src={url} alt="" style={carouselImageStyles}/>
           }
-          {!mediaType && 
-            <video 
-              src={url} 
+          {!mediaType &&
+            <video
+              src={url}
               style={carouselImageStyles}
               preload="auto"
               autoPlay="autoplay"
@@ -228,7 +209,7 @@ function Carousel ({
                   style={activeIndicatorIndex !== imageIndex ? indicatorStyles : activeIndicatorStyles}
                   key={imageIndex}
                   onClick={() => goToSlide(imageIndex)}
-                > 
+                >
                   {(indicatorType || configProps?.indicatorType) === "squares" ? <FaSquareFull style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/> : (indicatorType || configProps?.indicatorType) === "lines" ? <span className="lineIndicator"></span> : <FaCircle style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/>}
                 </div>
               ))}

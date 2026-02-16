@@ -6,9 +6,9 @@ import { elasticSearchService, idSearch } from '../../api/searchService'
 import Card from './helpers/Card';
 import CryptoJS from 'crypto-js';
 
-function MpCarousel ({ 
-  assetIds, 
-  linkToSearchResult, 
+function MpCarousel ({
+  assetIds,
+  linkToSearchResult,
   sortOrder,
   cardsLimit,
 
@@ -17,9 +17,9 @@ function MpCarousel ({
   detailsButton,
   copyLinkButton,
 
-  slidesToShow, 
-  slidesToScroll, 
-  showDots, 
+  slidesToShow,
+  slidesToScroll,
+  showDots,
   loop,
   autoplay,
 
@@ -44,18 +44,10 @@ function MpCarousel ({
   const sliderRef = useRef(null);
   const [products, setProducts] = useState([]);
 
-  // const assetIdsArray = [];
-
-  // for (const key in assetIds) {
-  //   if (key.startsWith('assetIds')) {
-  //     assetIdsArray.push(assetIds[key].assetId);
-  //   }
-  // }  
-
   const assetIdsArray = assetIds?.split(',').map(assetId => assetId.trim());
 
   const settings = {
-    
+
     slidesToShow: parseInt(slidesToShow, 10) || 5,
     slidesToScroll: parseInt(slidesToShow, 10) || 5,
     speed: 500,
@@ -68,7 +60,7 @@ function MpCarousel ({
         breakpoint: 1440,
         settings: {
           slidesToShow: 4,
-          slidesToScroll: 1, // Na manjim ekranima prikazuje samo 1 aset istovremeno
+          slidesToScroll: 1,
         },
       },
       {
@@ -86,7 +78,7 @@ function MpCarousel ({
 
   const resetTransform = () => {
     var interval = setInterval(() => {
-      // Delay the transformation to give react-slick time to update
+
       const slickList = sliderRef.current.innerSlider.list;
       if (slickList) {
         const slickTrack = slickList.querySelector('.slick-track');
@@ -97,11 +89,11 @@ function MpCarousel ({
     }, 500);
     setTimeout(function( ) { clearInterval( interval ); }, 3000);
   };
-  
+
   const elasticSearch = async () => {
 
     let url = new URL(linkToSearchResult);
-    let searchParams = new URLSearchParams(url.search);  
+    let searchParams = new URLSearchParams(url.search);
     const encryptedData = searchParams.get('data');
 
     let decryptedData = undefined;
@@ -130,7 +122,7 @@ function MpCarousel ({
     const suffixesString = searchParams.get('selectedSuffixes') || null;
     if (suffixesString) {
       selectedSuffixes = suffixesString.split(',');
-    } 
+    }
     const tagsString = searchParams.get('selectedTags') || null;
     if (tagsString) {
       selectedTags = tagsString.split(',');
@@ -162,14 +154,13 @@ function MpCarousel ({
       const flattenedData = assetsData.flat();
       setProducts(flattenedData);
     } catch (error) {
-      console.error('Error fetching data:', error);
     }
   };
 
   useEffect(() => {
     assetIds && idsSearch();
     linkToSearchResult && elasticSearch();
-  }, []);  
+  }, []);
 
   const buttonProps = {
     downloadButton,
@@ -189,11 +180,10 @@ function MpCarousel ({
     paddingRight: titlePaddingRight || null,
     paddingBottom: titlePaddingBottom || null,
     paddingLeft: titlePaddingLeft || null
-  }  
-
+  }
 
   return (
-    <div className='mpCarouselWrapper' id={navigationId && navigationId}> 
+    <div className='mpCarouselWrapper' id={navigationId && navigationId}>
       {title &&
         <TitleLevel className="title" style={titleStyles}>
           {title}
@@ -201,7 +191,7 @@ function MpCarousel ({
       }
       {products && products.length > 0 ? (
           <Slider ref={sliderRef} {...settings}>
-            {products.map(c => 
+            {products.map(c =>
               <Card
                 fields={c.fields}
                 key={c.fields.id.value}

@@ -9,7 +9,7 @@ export default function TemplateFormatFilter({ onUpdateSelectedFormat, selectedF
   const [parents, setParents] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
   useEffect(() => {
     fetch(`${baseUrl}/wp/rest/search-filters/templates`)
@@ -19,12 +19,10 @@ export default function TemplateFormatFilter({ onUpdateSelectedFormat, selectedF
         const transformedParents = mapData(JSON.parse(templateFormatObject.options));
         setParents(transformedParents);
 
-        // After setting the parents, also set the correct selected option based on prop
         const correspondingSelected = transformedParents.find(parent => parent.value === selectedFormat);
         setSelectedOption(correspondingSelected || null);
       })
       .catch((error) => {
-        console.error("Greška prilikom preuzimanja podataka:", error);
       });
   }, [selectedFormat]);
 
@@ -38,13 +36,13 @@ export default function TemplateFormatFilter({ onUpdateSelectedFormat, selectedF
 
   const handleSelectChange = (e) => {
     const selectedValue = e.target.value;
-    
+
     if (selectedValue === "none") {
       setSelectedOption(null);
       onUpdateSelectedFormat(null);
       return;
     }
-    
+
     const selectedItem = parents.find(item => item.value === selectedValue);
     setSelectedOption(selectedItem);
     onUpdateSelectedFormat(selectedValue);

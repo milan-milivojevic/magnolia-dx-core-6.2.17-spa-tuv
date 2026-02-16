@@ -13,9 +13,8 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
   const [filterValue, setFilterValue] = useState('');
   const [tempParents, setTempParents] = useState([]);
 
-  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW; 
+  const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
-  /* Dohvatanje Filtera */
   useEffect(() => {
     const requestOptions = {
       method: 'POST',
@@ -27,7 +26,7 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
       .then((response) => response.json())
       .then((data) => {
       const countData = data;
-        // Store the countResponseData and fetch the keywords
+
         return { countData, fetchPromise: fetch(`${baseUrl}/rest/mp/v1.2/keywords`) };
       })
       .then(async ({ countData, fetchPromise }) => {
@@ -38,13 +37,10 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
       .then(({ keywordsData, countData }) => {
         const countGroups = countData?.aggregations.keywords.aggs.id.subGroups;
         const transformedParents = mapData(keywordsData.items, countGroups);
-        console.log("transformedParents");
-        console.log(transformedParents);
         setParents(transformedParents);
         setInitialParents(transformedParents);
       })
       .catch((error) => {
-        console.error("Error while fetching data:", error);
       });
   }, [selectedKeywords]);
 
@@ -54,26 +50,21 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
         id: item.id,
         label: item.name.EN || item.name.DE,
         value: item.id.toString(),
-        count: 0, // default count
-        isChecked: selectedKeywords?.includes(item.id.toString()) // Check if the ID exists in the selectedKeywords
+        count: 0,
+        isChecked: selectedKeywords?.includes(item.id.toString())
       };
-  
-      // Find the matching group from the POST request response
+
       const matchingGroup = countGroups?.find(group => parseInt(group.group) === item.id);
-      
-      // If a matching group is found, update the count
+
       if (matchingGroup) {
         mappedItem.count = matchingGroup.count;
       }
-  
+
       return mappedItem;
     });
 
-    // Sortiranje stavki po atributu count od najveće do najmanje vrednosti
     return mappedItems.sort((a, b) => b.count - a.count);
   };
-
-  
 
   const toggleFilter = () => {
     if (!isFilterOpen) {
@@ -86,7 +77,7 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
   const toggleParentCheckbox = (parentId) => {
     setParents((prevState) => {
       return prevState.map((parent) => {
-        if (parent.id === parentId) {          
+        if (parent.id === parentId) {
           parent.isChecked = !parent.isChecked;
         }
         return parent;
@@ -96,9 +87,9 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
 
   const applySelection = () => {
     const values = [];
-    
-    parents.forEach(parent => {      
-      if (parent.isChecked) { // Ako nisu svi childovi selektovani, dodajemo vrednosti childova pojedinačno
+
+    parents.forEach(parent => {
+      if (parent.isChecked) {
         values.push(parent.value);
       }
     });
@@ -107,15 +98,12 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
     setIsFilterOpen(false);
   };
 
-  /* Restartovanje stanja svih Checkboxova */
-
   const clearAll = () => {
-    setParents(initialParents.map(parent => {     
+    setParents(initialParents.map(parent => {
       parent.isChecked = false;
       return parent;
     }));
   };
-
 
   const cancel = () => {
     const resetParents = parents.map((parent, index) => {
@@ -148,7 +136,7 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
               />
             </div>
             <button className="closeFilter" onClick={toggleFilter}><AiOutlineClose /></button>
-          </div>          
+          </div>
           <div className="checkboxFormWrapper"
             key={parents.map(c => c.isChecked).join('-')}
           >
@@ -169,7 +157,7 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
               </div>
             ))}
           </div>
-          <div className="filterActionButtons">            
+          <div className="filterActionButtons">
             <button className="clearButton" onClick={clearAll}>Clear All</button>
             <div>
               <button className="cancelButton" onClick={cancel}>Cancel</button>
@@ -181,4 +169,3 @@ export default function KeywordsFilter({onUpdateSelectedKeywords, selectedKeywor
     </div>
   )
 }
-

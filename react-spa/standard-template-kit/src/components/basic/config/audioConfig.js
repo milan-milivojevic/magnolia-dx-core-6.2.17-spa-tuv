@@ -1,7 +1,7 @@
 import React, { useId, useRef, useState } from 'react';
-import { aclCheck } from '../../../helpers/ACL'; 
+import { aclCheck } from '../../../helpers/ACL';
 
-function AudioConfig ({ 
+function AudioConfig ({
     audio,
     autoplay,
     loop,
@@ -40,13 +40,13 @@ function AudioConfig ({
     marginTop: marginTop || null,
     marginRight: marginRight || null,
     marginBottom: marginBottom || null,
-    marginLeft: marginLeft || null,    
+    marginLeft: marginLeft || null,
     borderColor: borderColor || null,
     borderWidth: borderWidth || null,
     borderStyle: borderStyle || null,
     borderRadius: borderRadius || null,
     width: width || "100%"
-  }  
+  }
 
   const isPagesApp = window.location.search.includes("mgnlPreview");
   const editMode = isPagesApp ? true : false;
@@ -57,7 +57,7 @@ function AudioConfig ({
 
   return (
     <>
-      {showComponent && 
+      {showComponent &&
         <div className='audioWrapper configComponents'>
           <div className="copyStyleName">
             <h4>Style Name: <span className="copyText" ref={myRef}>{styleName || null}</span></h4>
@@ -72,11 +72,11 @@ function AudioConfig ({
               autoPlay={autoplay === (false || "false") ? null : "autoplay"}
               controls="controls"
               muted={muted === (false || "false") ? null : "muted"}
-              loop={loop === (false || "false") ? null : "loop"} 
+              loop={loop === (false || "false") ? null : "loop"}
               id={"audio_" + id}
               className="audio"
               style={audioStyles}
-            ></audio>    
+            ></audio>
           </div>
         </div>
       }

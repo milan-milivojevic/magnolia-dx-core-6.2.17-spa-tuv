@@ -20,9 +20,9 @@ function CarouselDividedConfig ({
   arrowColor,
   arrowFontSize,
   arrowIndent,
-  indicatorType,  
+  indicatorType,
   indicatorFontSize,
-  indicatorIndent,  
+  indicatorIndent,
   indicatorColor,
   indicatorActiveColor,
   indicatorGap,
@@ -88,7 +88,6 @@ function CarouselDividedConfig ({
   const rightImage = activeRightImages[currentIndex];
   let urlRightImage = rightImage ? rightImage['@link'] : require('../../../images/placeholderImage.jpg');
 
-
   const carouselStyles = {
     position: "relative",
     marginTop: carouselMarginTop || null,
@@ -104,26 +103,23 @@ function CarouselDividedConfig ({
     left: arrowIndent || null
   }
 
-  const rightArrowStyles = { 
+  const rightArrowStyles = {
     color: arrowColor || null,
     fontSize: arrowFontSize || null,
     right: arrowIndent || null
   }
-  
+
   const carouselDividedImagesStyles = {
-    // borderColor: carouselBorderColor || null,
-    // borderWidth: carouselBorderWidth || null,
-    // borderStyle: carouselBorderStyle || null,
-    // borderRadius: carouselBorderRadius || null,
+
     maxHeight: carouselHeight || null
-  };  
-  
+  };
+
   const carouselImageStyles = {
     borderColor: carouselBorderColor || null,
     borderWidth: carouselBorderWidth || null,
     borderStyle: carouselBorderStyle || null,
     borderRadius: carouselBorderRadius || null
-  };  
+  };
 
   const indicatorStyles = {
     fontSize: indicatorFontSize || null,
@@ -173,9 +169,9 @@ function CarouselDividedConfig ({
                 {arrowType === "arrow" ? <BsArrowLeftShort /> : <BsChevronLeft/>}
               </div>
               <div onClick={goToNext} className="rightArrowStyles" style={rightArrowStyles}>
-                {arrowType === "arrow" ? <BsArrowRightShort /> : <BsChevronRight/>}  
+                {arrowType === "arrow" ? <BsArrowRightShort /> : <BsChevronRight/>}
               </div>
-            </div> 
+            </div>
           : null}
           <div className="carouselDividedImages" style={carouselDividedImagesStyles}>
             <img className="carouselImage left" style={carouselImageStyles} src={urlLeftImage} alt=""/>
@@ -189,7 +185,7 @@ function CarouselDividedConfig ({
                   style={activeIndicatorIndex !== imageIndex ? indicatorStyles : activeIndicatorStyles}
                   key={imageIndex}
                   onClick={() => goToSlide(imageIndex)}
-                > 
+                >
                   {indicatorType === "squares" ? <FaSquareFull style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/> : indicatorType === "lines" ? <span className="lineIndicator"></span> : <FaCircle style={activeIndicatorIndex !== imageIndex ? iconStyles : activeIconStyles}/>}
                 </div>
               ))}

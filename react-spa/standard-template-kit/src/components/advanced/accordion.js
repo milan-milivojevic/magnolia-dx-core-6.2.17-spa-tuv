@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { EditableArea } from "@magnolia/react-editor";
 import { getAPIBase } from '../../helpers/AppHelpers';
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
-import { FaPlus, FaMinus } from "react-icons/fa";
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -10,7 +9,7 @@ const Wrapper = styled.div`
     background-color: ${(props) => props.hovBgColor && props.hovBgColor + "!important"};
     color: ${(props) => props.hoverTitleColor && props.hoverTitleColor + "!important"};
   }
-  .accordion .item > .title:hover svg { 
+  .accordion .item > .title:hover svg {
     color: ${(props) => props.hoverChevronColor && props.hoverChevronColor + "!important"};
   }
 `
@@ -26,7 +25,7 @@ function Accordion ({
   titleHoverColor,
   chevronColor,
   chevronHoverColor,
-  chevronFontSize,      
+  chevronFontSize,
   accordionInnerPaddingTop,
   accordionInnerPaddingRight,
   accordionInnerPaddingBottom,
@@ -49,7 +48,7 @@ function Accordion ({
 
   const apiBase = getAPIBase();
   const restPath = process.env.REACT_APP_MGNL_API_PAGES;
-  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;   
+  const nodeName = process.env.REACT_APP_MGNL_APP_BASE;
 
   const [configProps, setConfigProps] = useState();
 
@@ -62,7 +61,7 @@ function Accordion ({
           result = data[0];
         } else if (noStyles !== (false || "false")) {
           result = null;
-        } 
+        }
         setConfigProps(result);
       });
   }, [styleName, noStyles, apiBase, restPath, nodeName]);
@@ -75,13 +74,13 @@ function Accordion ({
 
   const HeadlineLevel = titleLevel || configProps?.titleLevel || "h3";
 
-  const defBgColor = accordionDefaultBackColor || configProps?.accordionDefaultBackColor || null;    
+  const defBgColor = accordionDefaultBackColor || configProps?.accordionDefaultBackColor || null;
   const hovBgColor = accordionHoverBackColor || configProps?.accordionHoverBackColor || defBgColor || null;
 
-  const defTitleColor = titleColor || configProps?.titleColor || null; 
+  const defTitleColor = titleColor || configProps?.titleColor || null;
   const hoverTitleColor = titleHoverColor || configProps?.titleHoverColor || defTitleColor;
 
-  const defChevronColor = chevronColor || configProps?.chevronColor || null;    
+  const defChevronColor = chevronColor || configProps?.chevronColor || null;
   const hoverChevronColor = chevronHoverColor || configProps?.chevronHoverColor || defChevronColor;
 
   const itemStyles = {
@@ -122,7 +121,7 @@ function Accordion ({
       <div className="accordion" style={{justifyContent: position || configProps?.position || "center"}}>
         <div className="item" style={itemStyles}>
           <HeadlineLevel  className={open ? 'title show' : 'title'} onClick={() => toggle()} style={titleStyles}>
-            {title} 
+            {title}
             {open ?
               <BsChevronUp style={chevronStyles}/> :
               <BsChevronDown style={chevronStyles}/>

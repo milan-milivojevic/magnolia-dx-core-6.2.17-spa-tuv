@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 
-function ImageGalleryConfig ({     
+function ImageGalleryConfig ({
     multi,
     layout,
     col1width,
@@ -29,7 +29,7 @@ function ImageGalleryConfig ({
     imageBorderWidth,
     imageBorderStyle,
     imageBorderColor,
-    imageBorderRadius,    
+    imageBorderRadius,
     styleName
 }) {
 
@@ -42,8 +42,6 @@ function ImageGalleryConfig ({
 
   const baseUrl = process.env.REACT_APP_MGNL_HOST_NEW;
 
-  /* Filtering images from multi field to get active images array */
-
   const images = [];
 	for (let i = 0; i <= 20; i++) {
 		images.push(multi[`multi${i}`]?.image);
@@ -54,9 +52,8 @@ function ImageGalleryConfig ({
 
   let gridTemplateColumns;
 
-  if (layout === "Custom") {   
+  if (layout === "Custom") {
     gridTemplateColumns = `${col1width || ''} ${col2width || ''} ${col3width || ''} ${col4width || ''} ${col5width || ''} ${col6width || ''}`
-    console.log(gridTemplateColumns);
   }
 
   const imageGalleryComponentStyles = {
@@ -73,7 +70,7 @@ function ImageGalleryConfig ({
     borderStyle: wrapperBorderStyle || null,
     borderRadius: wrapperBorderRadius || null,
     gridAutoRows: rowsHeight || null,
-    gridTemplateColumns: gridTemplateColumns || null           
+    gridTemplateColumns: gridTemplateColumns || null
   }
 
   const galleryImageStyles = {
@@ -96,7 +93,7 @@ function ImageGalleryConfig ({
         </button>
       </div>
       <div className={`imageGalleryComponent layout${layout}`} style={imageGalleryComponentStyles}>
-        {activeImages.map((image, i) =>      
+        {activeImages.map((image, i) =>
           <img key={i} className="galleryImage" src={image['@link']} alt="" style={galleryImageStyles}/>
         )}
       </div>
